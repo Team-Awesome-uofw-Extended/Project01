@@ -15,15 +15,17 @@
 
 	<body>
 		<nav>
-			<div class="nav-wrapper container">
-				<div class="valign-wrapper"><a href="#!" class="brand-logo"><img src="./assets/images/beer.png" alt="" height="40px" srcset=""></a></div>
-				<a href="#" data-target="mobile-demo" class="sidenav-trigger"
-					><i class="material-icons">menu</i></a
-				>
-				<ul class="right hide-on-med-and-down">
-					<li><a href="./index.html">Create a Crawl</a></li>
-					<li><a class="modal-trigger" data-target="crawl-modal" href="./crawlcode.html">Crawl Code?</a></li>
-				</ul>
+			<div class="nav-wrapper row  orange lighten-1">
+                <div class="container">
+                    <a href="#!" id="logo-container" class="brand-logo"><img src="./assets/images/beer.png" alt="" height="40px" srcset=""></a>
+                    <a href="#" data-target="mobile-demo" class="sidenav-trigger"
+                        ><i class="material-icons">menu</i></a
+                    >
+                    <ul class="right hide-on-med-and-down">
+                        <li><a href="./index.html">Create a Crawl</a></li>
+                        <li><a class="modal-trigger" data-target="crawl-modal" href="./crawlcode.html">Crawl Code?</a></li>
+                    </ul>
+                </div>
 			</div>
 		</nav>
 
@@ -48,13 +50,66 @@
               </p>
             </div>
             <div class="modal-footer">
-              <a href="#!" class="modal-close waves-effect waves-green btn">Submit</a>
+              <a href="#!" class="modal-close waves-effect orange lighten-1 btn">Submit</a>
             </div>
           </div>
 
-        
+        <div class="container row map col s4 center-align">
+            <img src="./assets/images/map placeholder.png" alt="" class="map-placeholder ">
+        </div>
 
-
+        <div class="results row container">
+            <ul class="collection">
+                <li class="collection-item avatar">
+                  <img src="./assets/images/beer.png" alt="" class="circle 7855">
+                  <span class="title brewery">Good City Brewing Company</span>
+                  <p class="address">2108 N Farwell Ave<br>
+                     Milwaukee, Wisconsin
+                  </p>
+                  <p class="secondary-content 7855-selector"><label><input type="checkbox" /><span></span></label></p>
+                </li>
+                <li class="collection-item avatar">
+                  <img src="./assets/images/beer.png" alt="" class="circle 7897">
+                  <span class="title">MobCraft Beer</span>
+                  <p>505 S 5th St<br>
+                     Milwaukee, Wisconsin
+                  </p>
+                  <p class="secondary-content 7855-selector"><label><input type="checkbox" /><span></span></label></p>
+                </li>
+                <li class="collection-item avatar">
+                  <img src="./assets/images/beer.png" alt="" class="circle 7981">
+                  <span class="title">Urban Harvest Brewing Company</span>
+                  <p>2108 N Farwell Ave<br>
+                     Milwaukee, Wisconsin
+                  </p>
+                  <p class="secondary-content 7981-selector"><label><input type="checkbox" /><span></span></label></p>
+                </li>
+                <li class="collection-item avatar">
+                  <img src="./assets/images/beer.png" alt="" class="circle 7813">
+                  <span class="title">Broken Bat Brewing</span>
+                  <p>2108 N Farwell Ave<br>
+                     Milwaukee, Wisconsin
+                  </p>
+                  <p class="secondary-content 7813-selector"><label><input type="checkbox" /><span></span></label></p>
+                </li>
+                <li class="collection-item avatar">
+                  <img src="./assets/images/beer.png" alt="" class="circle 7780">
+                  <span class="title">Good City Brewing Company</span>
+                  <p>2108 N Farwell Ave<br>
+                     Milwaukee, Wisconsin
+                  </p>
+                  <p class="secondary-content 7780-selector"><label><input type="checkbox" /><span></span></label></p>
+                </li>
+                <li class="collection-item avatar">
+                  <img src="./assets/images/beer.png" alt="" class="circle 7814">
+                  <span class="title">Good City Brewing Company</span>
+                  <p>2108 N Farwell Ave<br>
+                     Milwaukee, Wisconsin
+                  </p>
+                  <p class="secondary-content 7814-selector"><label><input type="checkbox" /><span></span></label></p>
+                </li>
+              <a href="#!" class="waves-effect orange lighten-1 btn right">Submit</a>
+        </div>
 
 		<script src="./materialize/dist/js/materialize.js"></script>
 		<script src="./index.js"></script>
