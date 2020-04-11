@@ -1,0 +1,22 @@
+{
+  "name": "project01",
+  "version": "1.0.0",
+  "description": "First Project01 Mission Statement: This app will find breweries in your area to help you plan a brew crawl. This app will find breweries in your area, and present then in a select-able list. you can then select the ones you want to go to, and make a map itinerary of your crawl. You can then save your crawl, and share it to others using a access code.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Team-Awesome-uofw-Extended/Project01.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Team-Awesome-uofw-Extended/Project01/issues"
+  },
+  "homepage": "https://github.com/Team-Awesome-uofw-Extended/Project01#readme",
+  "dependencies": {
+    "materializecss": "^1.0.11"
+  }
+}
