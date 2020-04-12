@@ -1,9 +1,36 @@
 const rootDir = "https://api.openbrewerydb.org";
+const getCityDir = "http://open.mapquestapi.com/geocoding/v1/reverse";
 const perPage = "&per_page=5";
 const pageOffset = 1;
 const IdontCareItsFree = "DVuBz9NPzOaxkWYpA8tGNG4ZhrKokozQ";
 
 const imageSourceForNow = "./assets/images/beer.png";
+
+const setDefaultLocation = (city) => {
+  byCity(city);
+};
+
+// !! Get location for initial load, probably better to query googlemaps API later
+let cityFromNavigator;
+const cityFromCoords = async (lat, long) => {
+  const res = await axios.get(
+    `${getCityDir}?key=${IdontCareItsFree}&location=${lat},${long}`
+  );
+  locationData = res.data.results[0].locations[0];
+  cityFromNavigator = locationData.adminArea5;
+  setDefaultLocation(cityFromNavigator);
+};
+let lat, long;
+window.onload = () => {
+  const success = (location) => {
+    lat = location.coords.latitude;
+    long = location.coords.longitude;
+    cityFromCoords(lat, long);
+    console.log(location);
+  };
+  const error = (error) => console.log(error);
+  navigator.geolocation.getCurrentPosition(success, error);
+};
 
 // document.getElementById("idOfNextPageButton").addEventListener("click", () => {
 // e.preventDefault()
@@ -14,7 +41,7 @@ const imageSourceForNow = "./assets/images/beer.png";
 //   pageCount --;
 // });
 
-// !! Call inserData function to insert return into ul on main screen
+// !! Call insertData function to insert return into ul on main screen
 const ul = document.getElementById("brewList");
 const insertData = (data) => {
   for (var i = 0; i < data.length; i++) {
@@ -57,6 +84,7 @@ const byCity = async (city) => {
       `${rootDir}/breweries?by_city=${city}${perPage}`
     );
     console.log("byCity returns", res.data);
+    insertData(res.data);
     // sendToZach(res.data)
   } catch (error) {
     console.log(error);
@@ -70,6 +98,7 @@ const byZip = async (zipCode) => {
       `${rootDir}/breweries?by_postal=${zipCode}${perPage}&page=${pageOffset}`
     );
     console.log("byZip returns", res.data);
+    insertData(res.data);
     // sendToZach(res.data)
   } catch (error) {
     console.log(error);
@@ -88,4 +117,4 @@ const cityState = async (city, state) => {
     console.log(error);
   }
 };
-cityState("Milwaukee", "Wisconsin");
+// cityState("Milwaukee", "Wisconsin");
