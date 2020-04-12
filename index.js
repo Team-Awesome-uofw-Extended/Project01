@@ -6,6 +6,11 @@ const IdontCareItsFree = "DVuBz9NPzOaxkWYpA8tGNG4ZhrKokozQ";
 
 const imageSourceForNow = "./assets/images/beer.png";
 
+const listItem = document.getElementsByClassName("collection-item");
+const locationButton = document.getElementById("changeLocationButton");
+const stateInput = document.getElementById("stateChange");
+const cityInput = document.getElementById("cityChange");
+
 const setDefaultLocation = (city) => {
   byCity(city);
 };
@@ -78,6 +83,12 @@ const insertData = (data) => {
   }
 };
 
+const clearCurrentList = () => {
+  do {
+    ul.removeChild(ul.lastElementChild);
+  } while (ul.children.length > 0);
+};
+
 const byCity = async (city) => {
   try {
     const res = await axios.get(
@@ -118,3 +129,21 @@ const cityState = async (city, state) => {
   }
 };
 // cityState("Milwaukee", "Wisconsin");
+
+// Gets input from change location modal
+let newState = "";
+let newCity = "";
+locationButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  newCity = cityInput.value;
+  newState = stateInput.value;
+
+  if (newState === "" && newCity === "") {
+    return M.toast({ html: "Please fill this out completely" });
+  } else if (newState === "" || newState === null) {
+    clearCurrentList();
+    byCity(newCity);
+  }
+  clearCurrentList();
+  cityState(newCity, newState);
+});
