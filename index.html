@@ -20,6 +20,7 @@
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
           <li><a href="./index.html">Create a Crawl</a></li>
+          <li><a class="modal-trigger" data-target="locationModal">Change Location</a></li>
           <li><a class="modal-trigger" data-target="crawl-modal" href="./crawlcode.html">Crawl Code?</a></li>
         </ul>
       </div>
@@ -28,6 +29,7 @@
 
   <ul class="sidenav" id="mobile-demo">
     <li><a href="./index.html">Create a Crawl</a></li>
+    <li><a class="modal-trigger" data-target="locationModal">Change Location</a></li>
     <li><a href="./crawlcode.html">Crawl Code?</a></li>
   </ul>
 
@@ -51,6 +53,31 @@
     </div>
   </div>
 
+  <div id="locationModal" class="modal">
+    <div class="modal-content">
+      <h4>Change Location</h4>
+       <div class="row">
+    <div class="col s12">
+      <div class="row">
+        <div class="input-field col s12 l6">
+          <i class="material-icons prefix">location_searching</i>
+          <input type="text" id="cityChange" class="autocomplete">
+          <label for="autocomplete-input">City</label>
+        </div>
+        <div class="input-field col s12 l6">
+          <i class="material-icons prefix">location_searching</i>
+          <input type="text" id="stateChange" class="autocomplete">
+          <label for="autocomplete-input">State</label>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect orange lighten-1 btn right" id="changeLocationButton">Change Location</a>
+    </div>
+  </div>
+
   <div class="container" style="margin-bottom: 50px;">
     <div class=" row map col s4 center-align">
       <img src="./assets/images/map placeholder.png" alt="" class="map-placeholder ">
@@ -58,15 +85,13 @@
 
     <div class="results row ">
       <ul class="collection" id="brewList">
-        <li class="collection-item avatar">
-          <img src="./assets/images/beer.png" alt="" class="circle 7855">
-          <span class="title brewery">Good City Brewing Company</span>
-          <p class="address">2108 N Farwell Ave
-          </p>
-          <p>Milwaukee, Wisconsin</p>
-          <p class="secondary-content 7855-selector"><label><input type="checkbox" /><span></span></label></p>
-        </li>
+        
     </div>
+    <ul class="pagination center">
+      <li class="waves-effect"><a href="#!"><i class="material-icons" onclick="paginateDown()">chevron_left</i></a></li>
+      
+      <li class="waves-effect"><a href="#!"><i class="material-icons" onclick="paginateUp()">chevron_right</i></a></li>
+    </ul>
     <a href="#!" class="waves-effect orange lighten-1 btn right"
       style="margin-bottom: 30px; margin-top: 20px;">Submit</a>
   </div>

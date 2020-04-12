@@ -1,10 +1,17 @@
 const rootDir = "https://api.openbrewerydb.org";
 const getCityDir = "http://open.mapquestapi.com/geocoding/v1/reverse";
 const perPage = "&per_page=5";
-const pageOffset = 1;
+let pageOffset = 1;
 const IdontCareItsFree = "DVuBz9NPzOaxkWYpA8tGNG4ZhrKokozQ";
 
 const imageSourceForNow = "./assets/images/beer.png";
+
+const listItem = document.getElementsByClassName("collection-item");
+const locationButton = document.getElementById("changeLocationButton");
+const stateInput = document.getElementById("stateChange");
+const cityInput = document.getElementById("cityChange");
+
+let lastGetRequest = "";
 
 const setDefaultLocation = (city) => {
   byCity(city);
@@ -30,6 +37,17 @@ window.onload = () => {
   };
   const error = (error) => console.log(error);
   navigator.geolocation.getCurrentPosition(success, error);
+};
+
+const paginateUp = async () => {
+  pageOffset = pageOffset + 1;
+  try {
+    const res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
+    clearCurrentList();
+    insertData(res.data);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 // document.getElementById("idOfNextPageButton").addEventListener("click", () => {
@@ -78,11 +96,17 @@ const insertData = (data) => {
   }
 };
 
+const clearCurrentList = () => {
+  do {
+    ul.removeChild(ul.lastElementChild);
+  } while (ul.children.length > 0);
+};
+
 const byCity = async (city) => {
   try {
-    const res = await axios.get(
-      `${rootDir}/breweries?by_city=${city}${perPage}`
-    );
+    let byCityRef = `${rootDir}/breweries?by_city=${city}${perPage}`;
+    lastGetRequest = byCityRef;
+    const res = await axios.get(byCityRef);
     console.log("byCity returns", res.data);
     insertData(res.data);
     // sendToZach(res.data)
@@ -94,9 +118,9 @@ const byCity = async (city) => {
 
 const byZip = async (zipCode) => {
   try {
-    const res = await axios.get(
-      `${rootDir}/breweries?by_postal=${zipCode}${perPage}&page=${pageOffset}`
-    );
+    const byZipRef = `${rootDir}/breweries?by_postal=${zipCode}${perPage}&page=${pageOffset}`;
+    lastGetRequest = byZipRef;
+    const res = await axios.get(byZipRef);
     console.log("byZip returns", res.data);
     insertData(res.data);
     // sendToZach(res.data)
@@ -108,9 +132,9 @@ const byZip = async (zipCode) => {
 
 const cityState = async (city, state) => {
   try {
-    const res = await axios.get(
-      `${rootDir}/breweries?by_city=${city}&by_state=${state}${perPage}&page=${pageOffset}`
-    );
+    const cityStateRef = `${rootDir}/breweries?by_city=${city}&by_state=${state}${perPage}`;
+    lastGetRequest = cityStateRef;
+    const res = await axios.get(cityStateRef);
     console.log("cityState returns", res.data);
     insertData(res.data);
   } catch (error) {
@@ -118,3 +142,21 @@ const cityState = async (city, state) => {
   }
 };
 // cityState("Milwaukee", "Wisconsin");
+
+// Gets input from change location modal
+let newState = "";
+let newCity = "";
+locationButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  newCity = cityInput.value;
+  newState = stateInput.value;
+
+  if (newState === "" && newCity === "") {
+    return M.toast({ html: "Please fill this out completely" });
+  } else if (newState === "" || newState === null) {
+    clearCurrentList();
+    byCity(newCity);
+  }
+  clearCurrentList();
+  cityState(newCity, newState);
+});
