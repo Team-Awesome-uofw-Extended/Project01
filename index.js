@@ -49,6 +49,16 @@ const paginateUp = async () => {
     console.error(error);
   }
 };
+const paginateDown = async () => {
+  pageOffset = pageOffset - 1;
+  try {
+    const res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
+    clearCurrentList();
+    insertData(res.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 // document.getElementById("idOfNextPageButton").addEventListener("click", () => {
 // e.preventDefault()
