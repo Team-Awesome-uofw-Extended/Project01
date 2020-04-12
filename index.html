@@ -1,120 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link
-			href="https://fonts.googleapis.com/icon?family=Material+Icons"
-			rel="stylesheet"
-		/>
-        <link rel="stylesheet" href="./assets/css/style.css" />
-        <link rel="stylesheet" href="./assets/reset.css">
-		<link rel="stylesheet" href="./materialize/dist/css/materialize.css" />
-		<title>Document</title>
-	</head>
 
-	<body>
-		<nav>
-			<div class="nav-wrapper row  orange lighten-1">
-                <div class="container">
-                    <a href="#!" id="logo-container" class="brand-logo"><img src="./assets/images/beer.png" alt="" height="40px" srcset=""></a>
-                    <a href="#" data-target="mobile-demo" class="sidenav-trigger"
-                        ><i class="material-icons">menu</i></a
-                    >
-                    <ul class="right hide-on-med-and-down">
-                        <li><a href="./index.html">Create a Crawl</a></li>
-                        <li><a class="modal-trigger" data-target="crawl-modal" href="./crawlcode.html">Crawl Code?</a></li>
-                    </ul>
-                </div>
-			</div>
-		</nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./assets/reset.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="./node_modules/materialize-css/dist/css/materialize.css" />
+  <title>Document</title>
+</head>
 
-		<ul class="sidenav" id="mobile-demo">
-			<li><a href="./index.html">Create a Crawl</a></li>
-			<li><a href="./crawlcode.html">Crawl Code?</a></li>
+<body>
+  <nav>
+    <div class="nav-wrapper row  orange lighten-1">
+      <div class="container">
+        <a href="#!" id="logo-container" class="brand-logo"><img src="./assets/images/beer.png" alt="" height="40px"
+            srcset=""></a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="./index.html">Create a Crawl</a></li>
+          <li><a class="modal-trigger" data-target="crawl-modal" href="./crawlcode.html">Crawl Code?</a></li>
         </ul>
-        
+      </div>
+    </div>
+  </nav>
+
+  <ul class="sidenav" id="mobile-demo">
+    <li><a href="./index.html">Create a Crawl</a></li>
+    <li><a href="./crawlcode.html">Crawl Code?</a></li>
+  </ul>
 
 
 
 
 
 
-        <div id="crawl-modal" class="modal">
-            <div class="modal-content">
-              <h4>Enter your crawl code:</h4>
-              <p>
-                  <form action="">
-                      <input type="text" name="crawl-code" id="">
-                  </form>
-              </p>
-            </div>
-            <div class="modal-footer">
-              <a href="#!" class="modal-close waves-effect orange lighten-1 btn">Submit</a>
-            </div>
-          </div>
 
-        <div class="container row map col s4 center-align">
-            <img src="./assets/images/map placeholder.png" alt="" class="map-placeholder ">
-        </div>
+  <div id="crawl-modal" class="modal">
+    <div class="modal-content">
+      <h4>Enter your crawl code:</h4>
+      <p>
+        <form action="">
+          <input type="text" name="crawl-code" id="">
+        </form>
+      </p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect orange lighten-1 btn">Submit</a>
+    </div>
+  </div>
 
-        <div class="results row container">
-            <ul class="collection">
-                <li class="collection-item avatar">
-                  <img src="./assets/images/beer.png" alt="" class="circle 7855">
-                  <span class="title brewery">Good City Brewing Company</span>
-                  <p class="address">2108 N Farwell Ave<br>
-                     Milwaukee, Wisconsin
-                  </p>
-                  <p class="secondary-content 7855-selector"><label><input type="checkbox" /><span></span></label></p>
-                </li>
-                <li class="collection-item avatar">
-                  <img src="./assets/images/beer.png" alt="" class="circle 7897">
-                  <span class="title">MobCraft Beer</span>
-                  <p>505 S 5th St<br>
-                     Milwaukee, Wisconsin
-                  </p>
-                  <p class="secondary-content 7855-selector"><label><input type="checkbox" /><span></span></label></p>
-                </li>
-                <li class="collection-item avatar">
-                  <img src="./assets/images/beer.png" alt="" class="circle 7981">
-                  <span class="title">Urban Harvest Brewing Company</span>
-                  <p>2108 N Farwell Ave<br>
-                     Milwaukee, Wisconsin
-                  </p>
-                  <p class="secondary-content 7981-selector"><label><input type="checkbox" /><span></span></label></p>
-                </li>
-                <li class="collection-item avatar">
-                  <img src="./assets/images/beer.png" alt="" class="circle 7813">
-                  <span class="title">Broken Bat Brewing</span>
-                  <p>2108 N Farwell Ave<br>
-                     Milwaukee, Wisconsin
-                  </p>
-                  <p class="secondary-content 7813-selector"><label><input type="checkbox" /><span></span></label></p>
-                </li>
-                <li class="collection-item avatar">
-                  <img src="./assets/images/beer.png" alt="" class="circle 7780">
-                  <span class="title">Good City Brewing Company</span>
-                  <p>2108 N Farwell Ave<br>
-                     Milwaukee, Wisconsin
-                  </p>
-                  <p class="secondary-content 7780-selector"><label><input type="checkbox" /><span></span></label></p>
-                </li>
-                <li class="collection-item avatar">
-                  <img src="./assets/images/beer.png" alt="" class="circle 7814">
-                  <span class="title">Good City Brewing Company</span>
-                  <p>2108 N Farwell Ave<br>
-                     Milwaukee, Wisconsin
-                  </p>
-                  <p class="secondary-content 7814-selector"><label><input type="checkbox" /><span></span></label></p>
-                </li>
-              <a href="#!" class="waves-effect orange lighten-1 btn right">Submit</a>
-        </div>
+  <div class="container" style="margin-bottom: 50px;">
+    <div class=" row map col s4 center-align">
+      <img src="./assets/images/map placeholder.png" alt="" class="map-placeholder ">
+    </div>
 
-		<script src="./materialize/dist/js/materialize.js"></script>
-		<script src="./index.js"></script>
-		<script>
-			M.AutoInit();
-		</script>
-	</body>
+    <div class="results row ">
+      <ul class="collection" id="brewList">
+        <li class="collection-item avatar">
+          <img src="./assets/images/beer.png" alt="" class="circle 7855">
+          <span class="title brewery">Good City Brewing Company</span>
+          <p class="address">2108 N Farwell Ave
+          </p>
+          <p>Milwaukee, Wisconsin</p>
+          <p class="secondary-content 7855-selector"><label><input type="checkbox" /><span></span></label></p>
+        </li>
+    </div>
+    <a href="#!" class="waves-effect orange lighten-1 btn right"
+      style="margin-bottom: 30px; margin-top: 20px;">Submit</a>
+  </div>
+  <script src="./node_modules/materialize-css/dist/js/materialize.js"></script>
+  <script>
+    M.AutoInit();
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  <script src="./index.js"></script>
+</body>
+
 </html>
