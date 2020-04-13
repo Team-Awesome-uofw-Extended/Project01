@@ -68,12 +68,15 @@ const paginateDown = async () => {
 };
 // Need to change this to filter an array of states for two letter abbreviations to allow other states
 const getYelp = async (name, city, state, street) => {
+  state = state.toLowerCase();
+  let stateAbbreviated = stateArray[state];
+
   try {
     const res = await axios.get(`${corsAnywhere}${yelpRoot}/matches`, {
       params: {
         name: name,
         address1: street,
-        city: city,
+        city: stateAbbreviated,
         state: "WI",
         country: "US",
       },
@@ -99,7 +102,6 @@ const getYelp = async (name, city, state, street) => {
   }
 };
 
-// !! Call insertData function to insert return into ul on main screen
 const ul = document.getElementById("brewList");
 const insertData = (data) => {
   for (var i = 0; i < data.length; i++) {
