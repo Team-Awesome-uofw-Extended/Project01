@@ -102,7 +102,6 @@ const getYelp = async (name, city, state, street) => {
     console.error(error);
   }
 };
-console.log(Math.random());
 
 const setCheckedState = (target) => {
   if (currentCrawl.indexOf(target) === -1) {
@@ -140,6 +139,11 @@ const insertData = (data) => {
     checkBoxContainer.classList.add("secondary-content");
     let checkBoxLabel = document.createElement("label");
     let checkBox = document.createElement("input");
+    let checkedStatus;
+    if (currentCrawl.indexOf(data[i].id) !== -1) {
+      checkedStatus = "checked";
+    } else checkedStatus = "unchecked";
+    checkBox.setAttribute("checked", checkedStatus);
     checkBox.setAttribute("value", data[i].id);
     checkBox.addEventListener("click", (e) => {
       console.log(e.target.value);
