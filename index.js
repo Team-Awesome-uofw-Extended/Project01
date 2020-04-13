@@ -16,6 +16,7 @@ const locationButton = document.getElementById("changeLocationButton");
 const stateInput = document.getElementById("stateChange");
 const cityInput = document.getElementById("cityChange");
 let dataHolder = [];
+let currentCrawl = [];
 let activeYelpRequest = {};
 let lastGetRequest = "";
 
@@ -101,6 +102,17 @@ const getYelp = async (name, city, state, street) => {
     console.error(error);
   }
 };
+console.log(Math.random());
+
+const setCheckedState = (target) => {
+  if (currentCrawl.indexOf(target) === -1) {
+    currentCrawl.push(target);
+    window.sessionStorage.setItem("crawlArray", currentCrawl);
+  } else {
+    currentCrawl = currentCrawl.filter((pubID) => pubID !== target);
+    window.sessionStorage.setItem("crawlArray", currentCrawl);
+  }
+};
 
 const ul = document.getElementById("brewList");
 const insertData = (data) => {
@@ -128,6 +140,11 @@ const insertData = (data) => {
     checkBoxContainer.classList.add("secondary-content");
     let checkBoxLabel = document.createElement("label");
     let checkBox = document.createElement("input");
+    checkBox.setAttribute("value", data[i].id);
+    checkBox.addEventListener("click", (e) => {
+      console.log(e.target.value);
+      setCheckedState(e.target.value);
+    });
     checkBox.setAttribute("type", "checkbox");
     let emptySpan = document.createElement("span");
     checkBoxLabel.appendChild(checkBox);
