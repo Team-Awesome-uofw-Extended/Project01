@@ -19,7 +19,7 @@
             srcset=""></a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
-          <li><a href="./index.html">Create a Crawl</a></li>
+          <li><a href="#">Create a Crawl</a></li>
           <li><a class="modal-trigger" data-target="locationModal">Change Location</a></li>
           <li><a class="modal-trigger" data-target="crawl-modal" href="./crawlcode.html">Crawl Code?</a></li>
         </ul>
@@ -28,7 +28,7 @@
   </nav>
 
   <ul class="sidenav" id="mobile-demo">
-    <li><a href="./index.html">Create a Crawl</a></li>
+    <li><a href="#">Create a Crawl</a></li>
     <li><a class="modal-trigger" data-target="locationModal">Change Location</a></li>
     <li><a href="./crawlcode.html">Crawl Code?</a></li>
   </ul>
@@ -61,13 +61,13 @@
       <div class="row">
         <div class="input-field col s12 l6">
           <i class="material-icons prefix">location_searching</i>
-          <input type="text" id="cityChange" class="autocomplete">
-          <label for="autocomplete-input">City</label>
+          <input type="text" id="cityChange">
+          <label for="cityChange">City</label>
         </div>
         <div class="input-field col s12 l6">
           <i class="material-icons prefix">location_searching</i>
-          <input type="text" id="stateChange" class="autocomplete">
-          <label for="autocomplete-input">State</label>
+          <input type="text" id="stateChange">
+          <label for="stateChange">State</label>
         </div>
       </div>
     </div>
@@ -99,7 +99,8 @@
   <script>
     M.AutoInit();
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  <script src="./node_modules/axios/dist/axios.js"></script>
+  <script src="./stateArray.js"></script>
   <script src="./index.js"></script>
 </body>
 
