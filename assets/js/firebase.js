@@ -12,4 +12,10 @@ var firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
 
-  console.log(uuid())
+
+$(".crawl-submit").click(function() {
+    var crawlCode = Math.round(Math.random() * 1000000);
+    console.log(currentCrawl);
+})
+
+
