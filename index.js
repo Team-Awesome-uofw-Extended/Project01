@@ -77,7 +77,7 @@ const getYelp = async (name, city, state, street) => {
       params: {
         name: name,
         address1: street,
-        city: stateAbbreviated,
+        city: city,
         state: stateAbbreviated,
         country: "US",
       },
