@@ -9,13 +9,22 @@ var firebaseConfig = {
     measurementId: "G-66M9T4ETQS"
   };
 
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
 
+var crawlCode
+var 
 
 $(".crawl-submit").click(function() {
-    var crawlCode = Math.round(Math.random() * 1000000);
-    console.log(currentCrawl);
+    crawlCode = Math.round(Math.random() * 1000000);
+    window.sessionStorage.getItem(crawlArray);
+    console.log("success?")
+    writeCrawl();
 })
 
 
+function writeCrawl(crawlCode, crawlArray) {
+    firebase.database().ref(`crawl-code/` + crawlCode).set({
+        stops: crawlArray;
+    })
+}
