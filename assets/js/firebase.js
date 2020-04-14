@@ -15,14 +15,17 @@ var database = firebase.database();
 
 
 var crawlCode = 0;
-var passingCrawl;
+var passingCrawl = [];
 
 $(".crawl-submit").click(function() {
     crawlCode = Math.round(Math.random() * 1000000);
+    // passingCrawl = window.localStorage.getItem(crawlArray);
+    // console.log(passingCrawl);
     console.log("Crawlcode" + crawlCode);
-    console.log(passingCrawl);
     console.log("success?");
     writeCrawl();
+    sessionStorage.setItem("Crawl Code", crawlCode)
+    window.location.href = "confirmation.html"
 })
 
 
@@ -31,3 +34,6 @@ function writeCrawl() {
         stops: "hi"
     });
 }
+
+
+

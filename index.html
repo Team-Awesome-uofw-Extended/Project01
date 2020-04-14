@@ -20,25 +20,24 @@
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
           <li><a href="#">Create a Crawl</a></li>
-          <li><a class="modal-trigger" data-target="locationModal">Change Location</a></li>
           <li><a class="modal-trigger" data-target="crawl-modal" href="./crawlcode.html">Crawl Code?</a></li>
         </ul>
       </div>
     </div>
   </nav>
-
+  
   <ul class="sidenav" id="mobile-demo">
     <li><a href="#">Create a Crawl</a></li>
     <li><a class="modal-trigger" data-target="locationModal">Change Location</a></li>
     <li><a href="./crawlcode.html">Crawl Code?</a></li>
   </ul>
+  
+  
+  
+  
 
-
-
-
-
-
-
+  
+  
   <div id="crawl-modal" class="modal">
     <div class="modal-content">
       <h4>Enter your crawl code:</h4>
@@ -52,7 +51,7 @@
       <a href="#!" class="modal-close waves-effect orange lighten-1 btn">Submit</a>
     </div>
   </div>
-
+  
   <div id="locationModal" class="modal">
     <div class="modal-content">
       <h4>Change Location</h4>
@@ -76,15 +75,16 @@
     <div class="modal-footer">
       <a href="#!" class="modal-close waves-effect orange lighten-1 btn right" id="changeLocationButton">Change
         Location</a>
+      </div>
     </div>
-  </div>
-
-  <div class="container" style="margin-bottom: 50px;">
-    <div class=" row map col s4 center-align">
-      <img src="./assets/images/map placeholder.png" alt="" class="map-placeholder ">
-    </div>
-
-    <div class="results row ">
+    
+    <div class="container" style="margin-bottom: 50px;">
+      <div class=" row map col s4 center-align">
+        <img src="./assets/images/map placeholder.png" alt="" class="map-placeholder ">
+      </div>
+      
+      <a class="modal-trigger btn orange lighten-1" data-target="locationModal">Change Location</a>
+      <div class="results row ">
       <ul class="collection" id="brewList">
 
     </div>
