@@ -56,27 +56,38 @@ var breweries = [{
     }];
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 8,
+      zoom: 15,
       center: {lat: -34.397, lng: 150.644}
     });
     geocoder = new google.maps.Geocoder();
-    codeAddress(geocoder, map);
+    setMarkers(geocoder, map);
   }
-  function codeAddress(geocoder, map) {
-    for (i in breweries){
+  function setMarkers(geocoder, map) {
+    for (i =0; i < breweries.length; i++){
+        var content = breweries[i].name
+        console.log(content)
     geocoder.geocode({'address': breweries[i].street + ', ' + breweries[i].city + ', ' + breweries[i].state}, function(results, status) {
+        console.log(content)
       if (status === 'OK') {
-        map.setCenter(results[0].geometry.location);
+        //map.setCenter(results[0].geometry.location);
         var marker = new google.maps.Marker({
           map: map,
           position: results[0].geometry.location
         });
+        var infowindow = new google.maps.InfoWindow()
+        google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+            return function() {
+               infowindow.setContent(content);
+               infowindow.open(map,marker);
+            };
+        })(marker,content,infowindow)); 
+
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
     var map = new google.maps.Map(
-        document.getElementById('map'), {zoom: 6, center: centerLoc});
+        document.getElementById('map'), {zoom: 12, center: centerLoc});
     // The marker, positioned at Uluru
     //var marker = new google.maps.Marker({position: centerLoc, map: map});
   }
