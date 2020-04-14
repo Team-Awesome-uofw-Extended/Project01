@@ -20,25 +20,24 @@
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
           <li><a href="#">Create a Crawl</a></li>
-          <li><a class="modal-trigger" data-target="locationModal">Change Location</a></li>
           <li><a class="modal-trigger" data-target="crawl-modal" href="./crawlcode.html">Crawl Code?</a></li>
         </ul>
       </div>
     </div>
   </nav>
-
+  
   <ul class="sidenav" id="mobile-demo">
     <li><a href="#">Create a Crawl</a></li>
     <li><a class="modal-trigger" data-target="locationModal">Change Location</a></li>
     <li><a href="./crawlcode.html">Crawl Code?</a></li>
   </ul>
+  
+  
+  
+  
 
-
-
-
-
-
-
+  
+  
   <div id="crawl-modal" class="modal">
     <div class="modal-content">
       <h4>Enter your crawl code:</h4>
@@ -52,7 +51,7 @@
       <a href="#!" class="modal-close waves-effect orange lighten-1 btn">Submit</a>
     </div>
   </div>
-
+  
   <div id="locationModal" class="modal">
     <div class="modal-content">
       <h4>Change Location</h4>
@@ -76,15 +75,16 @@
     <div class="modal-footer">
       <a href="#!" class="modal-close waves-effect orange lighten-1 btn right" id="changeLocationButton">Change
         Location</a>
+      </div>
     </div>
-  </div>
-
-  <div class="container" style="margin-bottom: 50px;">
-    <div class=" row map col s4 center-align">
-      <img src="./assets/images/map placeholder.png" alt="" class="map-placeholder ">
-    </div>
-
-    <div class="results row ">
+    
+    <div class="container" style="margin-bottom: 50px;">
+      <div class=" row map col s4 center-align">
+        <img src="./assets/images/map placeholder.png" alt="" class="map-placeholder ">
+      </div>
+      
+      <a class="modal-trigger btn orange lighten-1" data-target="locationModal">Change Location</a>
+      <div class="results row ">
       <ul class="collection" id="brewList">
 
     </div>
@@ -100,14 +100,14 @@
   <script>
     M.AutoInit();
   </script>
-  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+crossorigin="anonymous"></script>
   <script src="./node_modules/uuidv4/build/lib/uuidv4.js"></script>
   <script src="./node_modules/axios/dist/axios.js"></script>
-
-  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
   <script src="./stateArray.js"></script>
   <script src="./index.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
   <script src="./assets/js/firebase.js"></script>
 </body>
 

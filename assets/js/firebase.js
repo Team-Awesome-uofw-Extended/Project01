@@ -1,30 +1,39 @@
 var firebaseConfig = {
-    apiKey: "AIzaSyC5xOrnUb8u8nAyD0gQvyDylQWsMQOo0Gk",
-    authDomain: "brewcrawler-64bc1.firebaseapp.com",
-    databaseURL: "https://brewcrawler-64bc1.firebaseio.com",
-    projectId: "brewcrawler-64bc1",
-    storageBucket: "brewcrawler-64bc1.appspot.com",
-    messagingSenderId: "982432305908",
-    appId: "1:982432305908:web:40dceddedaaed9f83644a1",
-    measurementId: "G-66M9T4ETQS"
+    apiKey: "AIzaSyBjS1MGlsOhRi0LHvUCLtoP8yzv46G-YPg",
+    authDomain: "brewcrawler-ae0b1.firebaseapp.com",
+    databaseURL: "https://brewcrawler-ae0b1.firebaseio.com",
+    projectId: "brewcrawler-ae0b1",
+    storageBucket: "brewcrawler-ae0b1.appspot.com",
+    messagingSenderId: "1058211844569",
+    appId: "1:1058211844569:web:03243ecfc694b7bc3989c8"
   };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
 
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
 
-var crawlCode
-var 
+var database = firebase.database();
+
+
+var crawlCode = 0;
+var passingCrawl = [];
 
 $(".crawl-submit").click(function() {
     crawlCode = Math.round(Math.random() * 1000000);
-    window.sessionStorage.getItem(crawlArray);
-    console.log("success?")
+    // passingCrawl = window.localStorage.getItem(crawlArray);
+    // console.log(passingCrawl);
+    console.log("Crawlcode" + crawlCode);
+    console.log("success?");
     writeCrawl();
+    sessionStorage.setItem("Crawl Code", crawlCode)
+    window.location.href = "confirmation.html"
 })
 
 
-function writeCrawl(crawlCode, crawlArray) {
-    firebase.database().ref(`crawl-code/` + crawlCode).set({
-        stops: crawlArray;
-    })
+function writeCrawl() {
+    firebase.database().ref(`crawl-code/${crawlCode}`).set({
+        stops: "hi"
+    });
 }
+
+
+
