@@ -104,18 +104,18 @@ const getYelp = async (name, city, state, street) => {
 };
 
 const setCheckedState = (target) => {
-  if (window.sessionStorage.crawlArray) {
-    let tempArray = window.sessionStorage.getItem("crawlArray");
+  if (window.localStorage.crawlArray) {
+    let tempArray = JSON.parse(window.localStorage.getItem("crawlArray"));
     if (tempArray.indexOf(target) === -1) {
       currentCrawl.push(target);
-      window.sessionStorage.setItem("crawlArray", currentCrawl);
+      window.localStorage.setItem("crawlArray", JSON.stringify(currentCrawl));
     } else {
-      currentCrawl = currentCrawl.filter((pubID) => pubID !== target);
-      window.sessionStorage.setItem("crawlArray", currentCrawl);
+      tempArray = tempArray.filter((pubID) => pubID !== target);
+      window.localStorage.setItem("crawlArray", JSON.stringify(tempArray));
     }
-  } else if (!window.sessionStorage.crawlArray) {
+  } else if (!window.localStorage.crawlArray) {
     currentCrawl.push(target);
-    window.sessionStorage.setItem("crawlArray", currentCrawl);
+    window.localStorage.setItem("crawlArray", JSON.stringify(currentCrawl));
   }
 };
 
@@ -146,8 +146,8 @@ const insertData = (data) => {
     let checkBoxLabel = document.createElement("label");
     let checkBox = document.createElement("input");
     let checkedStatus;
-    if (window.sessionStorage.crawlArray) {
-      let temporaryArray = window.sessionStorage.getItem("crawlArray");
+    if (window.localStorage.crawlArray) {
+      let temporaryArray = window.localStorage.getItem("crawlArray");
       if (temporaryArray.indexOf(data[i].id) !== -1) {
         checkedStatus = "checked";
         checkBox.setAttribute("checked", checkedStatus);
