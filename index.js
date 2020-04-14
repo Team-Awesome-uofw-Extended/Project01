@@ -78,13 +78,14 @@ const getYelp = async (name, city, state, street) => {
         name: name,
         address1: street,
         city: stateAbbreviated,
-        state: "WI",
+        state: stateAbbreviated,
         country: "US",
       },
       headers: {
         Authorization: `Bearer ${yelpApiKey}`,
       },
     });
+
     activeYelpRequest = res.data.businesses[0];
 
     let queryDetailID = res.data.businesses[0].id;
