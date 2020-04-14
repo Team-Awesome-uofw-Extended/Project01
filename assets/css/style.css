@@ -1,0 +1,12 @@
+.brand-logo {
+    margin: 5px;
+    filter: invert(100%);
+}
+
+.map-placeholder {
+    margin-top: 20px;
+}
+
+.shorten {
+    width: fit-content;
+}
