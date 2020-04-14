@@ -64,12 +64,11 @@ function initMap() {
   }
   function setMarkers(geocoder, map) {
     for (i =0; i < breweries.length; i++){
-        var content = breweries[i].name
-        console.log(content)
     geocoder.geocode({'address': breweries[i].street + ', ' + breweries[i].city + ', ' + breweries[i].state}, function(results, status) {
-        console.log(content)
       if (status === 'OK') {
         //map.setCenter(results[0].geometry.location);
+        var content = breweries[i].name
+        console.log(content)
         var marker = new google.maps.Marker({
           map: map,
           position: results[0].geometry.location
