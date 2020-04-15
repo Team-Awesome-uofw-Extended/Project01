@@ -1,6 +1,7 @@
 require("!style-loader!css-loader!./node_modules/materialize-css/dist/css/materialize.css");
 const stateArray = require("./stateArray.js");
 const axios = require("axios");
+
 const IdontCareItsFree = "DVuBz9NPzOaxkWYpA8tGNG4ZhrKokozQ";
 const yelpApiKey =
   "IuAyGOEnsbAVEOfh772yr4h5WbKH7nwCmBINkNoHvhY8urogfGa0KFA79Pb8_eiThKsvKyKmIP3k_dATh2CO9KpXLT8D4QWRSsQy91N1weylIVAUHMYAFuGL_6OTXnYx";
@@ -70,6 +71,12 @@ const paginateDown = async () => {
     console.error(error);
   }
 };
+document.getElementById("paginateUp").addEventListener("click", () => {
+  paginateUp();
+});
+document.getElementById("paginateDown").addEventListener("click", () => {
+  paginateDown();
+});
 // Need to change this to filter an array of states for two letter abbreviations to allow other states
 const getYelp = async (name, city, state, street) => {
   state = state.toLowerCase();
