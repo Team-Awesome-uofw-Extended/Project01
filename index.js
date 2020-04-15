@@ -1,3 +1,6 @@
+require("!style-loader!css-loader!./node_modules/materialize-css/dist/css/materialize.css");
+const stateArray = require("./stateArray.js");
+const axios = require("axios");
 const IdontCareItsFree = "DVuBz9NPzOaxkWYpA8tGNG4ZhrKokozQ";
 const yelpApiKey =
   "IuAyGOEnsbAVEOfh772yr4h5WbKH7nwCmBINkNoHvhY8urogfGa0KFA79Pb8_eiThKsvKyKmIP3k_dATh2CO9KpXLT8D4QWRSsQy91N1weylIVAUHMYAFuGL_6OTXnYx";
@@ -30,7 +33,7 @@ const cityFromCoords = async (lat, long) => {
   const res = await axios.get(
     `${getCityDir}?key=${IdontCareItsFree}&location=${lat},${long}`
   );
-  locationData = res.data.results[0].locations[0];
+  let locationData = res.data.results[0].locations[0];
   cityFromNavigator = locationData.adminArea5;
   setDefaultLocation(cityFromNavigator);
 };
