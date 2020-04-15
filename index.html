@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="./assets/css/reset.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <link rel="stylesheet" href="./assets/css/style.css" />
+
 
   <title>Document</title>
 </head>
@@ -25,19 +25,19 @@
       </div>
     </div>
   </nav>
-  
+
   <ul class="sidenav" id="mobile-demo">
     <li><a href="#">Create a Crawl</a></li>
     <li><a class="modal-trigger" data-target="locationModal">Change Location</a></li>
     <li><a href="./crawlcode.html">Crawl Code?</a></li>
   </ul>
-  
-  
-  
-  
 
-  
-  
+
+
+
+
+
+
   <div id="crawl-modal" class="modal">
     <div class="modal-content">
       <h4>Enter your crawl code:</h4>
@@ -51,7 +51,7 @@
       <a href="./crawlcode.html" class="modal-close waves-effect orange lighten-1 btn crawl-code-submit">Submit</a>
     </div>
   </div>
-  
+
   <div id="locationModal" class="modal">
     <div class="modal-content">
       <h4>Change Location</h4>
@@ -75,42 +75,47 @@
     <div class="modal-footer">
       <a href="#!" class="modal-close waves-effect orange lighten-1 btn right" id="changeLocationButton">Change
         Location</a>
-      </div>
     </div>
-    
-    <div class="container" style="margin-bottom: 50px;">
-      <div class=" row map col s4 center-align">
-        <img src="./assets/images/map placeholder.png" alt="" class="map-placeholder ">
-      </div>
-      
-      <a class="modal-trigger btn orange lighten-1" data-target="locationModal">Change Location</a>
-      <div class="results row ">
+  </div>
+
+  <div class="container" style="margin-bottom: 50px;">
+    <div class=" row map col s4 center-align">
+      <img src="./assets/images/map placeholder.png" alt="" class="map-placeholder ">
+    </div>
+
+    <a class="modal-trigger btn orange lighten-1" data-target="locationModal">Change Location</a>
+    <div class="results row ">
       <ul class="collection" id="brewList">
 
     </div>
     <ul class="pagination center">
-      <li class="waves-effect"><a href="#!"><i class="material-icons" id="paginateDown" >chevron_left</i></a></li>
+      <li class="waves-effect"><a href="#!"><i class="material-icons" id="paginateDown">chevron_left</i></a></li>
 
-      <li class="waves-effect"><a href="#!"><i class="material-icons" id="paginateUp" >chevron_right</i></a></li>
+      <li class="waves-effect"><a href="#!"><i class="material-icons" id="paginateUp">chevron_right</i></a></li>
     </ul>
-    <a href="#!" class="waves-effect orange lighten-1 btn right crawl-submit"
+    <a href="#!" class="waves-effect orange lighten-1 btn right" id="crawl-submit"
       style="margin-bottom: 30px; margin-top: 20px;">Submit</a>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script>
-    M.AutoInit();
-  </script>
+  <div id="detailModal" class="modal">
+    <div class="modal-content">
+      <h4>Modal Header</h4>
+      <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
 
 
 
 
-<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
   <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
-  <script src="./assets/js/firebase.js"></script>
-    <script src="./bundle.js"></script>
+
+  <script src="./bundle.js"></script>
 
 </body>
 

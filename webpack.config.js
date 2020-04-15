@@ -1,5 +1,8 @@
+const webpack = require("webpack");
+const jquery = require("jquery");
+
 module.exports = {
-  entry: ["babel-polyfill", "./index.js"],
+  entry: ["babel-polyfill", "./index.js", "./assets/js/firebase.js"],
   output: {
     path: __dirname,
     filename: "bundle.js",

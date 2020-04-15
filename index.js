@@ -1,4 +1,6 @@
-require("!style-loader!css-loader!./node_modules/materialize-css/dist/css/materialize.css");
+const M = require("!style-loader!css-loader!./node_modules/materialize-css/dist/css/materialize.css");
+require("!style-loader!css-loader!./assets/css/style.css");
+require("./assets/js/firebase.js");
 const stateArray = require("./stateArray.js");
 const axios = require("axios");
 
@@ -9,6 +11,8 @@ const rootDir = "https://api.openbrewerydb.org";
 // Yes, I know this is kindof cheating
 const corsAnywhere = "https://cors-anywhere.herokuapp.com/";
 const getCityDir = "http://open.mapquestapi.com/geocoding/v1/reverse";
+const byTypeFilter =
+  "&by_type=micro&by_type=bar&by_type=brewpub&by_type=large&by_type=proprieter&by_type=regional";
 const yelpRoot = "https://api.yelp.com/v3/businesses";
 const perPage = "&per_page=5";
 let pageOffset = 1;
@@ -23,6 +27,8 @@ let dataHolder = [];
 let currentCrawl = [];
 let activeYelpRequest = {};
 let lastGetRequest = "";
+let location = window.location.pathname;
+console.log("location", location);
 
 const setDefaultLocation = (city) => {
   byCity(city);
@@ -71,12 +77,14 @@ const paginateDown = async () => {
     console.error(error);
   }
 };
-document.getElementById("paginateUp").addEventListener("click", () => {
-  paginateUp();
-});
-document.getElementById("paginateDown").addEventListener("click", () => {
-  paginateDown();
-});
+if (location === "/index.html" || location === "/") {
+  document.getElementById("paginateUp").addEventListener("click", () => {
+    paginateUp();
+  });
+  document.getElementById("paginateDown").addEventListener("click", () => {
+    paginateDown();
+  });
+}
 // Need to change this to filter an array of states for two letter abbreviations to allow other states
 const getYelp = async (name, city, state, street) => {
   state = state.toLowerCase();
@@ -129,6 +137,12 @@ const setCheckedState = (target) => {
     window.localStorage.setItem("crawlArray", JSON.stringify(currentCrawl));
   }
 };
+
+// const getBrewerybyID = ({ ids }) => {
+//   console.log(ids);
+//   console.log(typeof ids);
+// };
+// module.exports = getBrewerybyID();
 
 const ul = document.getElementById("brewList");
 const insertData = (data) => {
@@ -244,17 +258,19 @@ const cityState = async (city, state) => {
 // Gets input from change location modal
 let newState = "";
 let newCity = "";
-locationButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  newCity = cityInput.value;
-  newState = stateInput.value;
+if (location === "/index.html" || location === "/") {
+  locationButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    newCity = cityInput.value;
+    newState = stateInput.value;
 
-  if (newState === "" && newCity === "") {
-    return M.toast({ html: "Please fill this out completely" });
-  } else if (newState === "" || newState === null) {
+    if (newState === "" && newCity === "") {
+      return M.toast({ html: "Please fill this out completely" });
+    } else if (newState === "" || newState === null) {
+      clearCurrentList();
+      byCity(newCity);
+    }
     clearCurrentList();
-    byCity(newCity);
-  }
-  clearCurrentList();
-  cityState(newCity, newState);
-});
+    cityState(newCity, newState);
+  });
+}
