@@ -55,6 +55,8 @@ const getById = async (id) => {
   }
 };
 
+// confirmation - code;
+
 if (window.location.pathname === "/confirmation.html") {
   let crawlCode = JSON.parse(window.localStorage.getItem("crawlCode"));
   let crawlData = JSON.parse(window.localStorage.getItem("crawlArray"));
@@ -62,5 +64,5 @@ if (window.location.pathname === "/confirmation.html") {
     getById(crawlData[i]);
   }
   console.log("returned array", returnedCrawlData);
-  insertData(returnedCrawlData);
+  document.getElementById("confirmation-code").innerHTML = crawlCode;
 }
