@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="./assets/css/reset.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <link rel="stylesheet" href="./assets/css/style.css" />
-  <link rel="stylesheet" href="./node_modules/materialize-css/dist/css/materialize.css" />
+
   <title>Document</title>
 </head>
 
@@ -89,25 +89,29 @@
 
     </div>
     <ul class="pagination center">
-      <li class="waves-effect"><a href="#!"><i class="material-icons" onclick="paginateDown()">chevron_left</i></a></li>
+      <li class="waves-effect"><a href="#!"><i class="material-icons" id="paginateDown" >chevron_left</i></a></li>
 
-      <li class="waves-effect"><a href="#!"><i class="material-icons" onclick="paginateUp()">chevron_right</i></a></li>
+      <li class="waves-effect"><a href="#!"><i class="material-icons" id="paginateUp" >chevron_right</i></a></li>
     </ul>
     <a href="#!" class="waves-effect orange lighten-1 btn right crawl-submit"
       style="margin-bottom: 30px; margin-top: 20px;">Submit</a>
   </div>
-  <script src="./node_modules/materialize-css/dist/js/materialize.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script>
     M.AutoInit();
   </script>
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 crossorigin="anonymous"></script>
-  <script src="./node_modules/axios/dist/axios.js"></script>
-  <script src="./stateArray.js"></script>
-  <script src="./index.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
   <script src="./assets/js/firebase.js"></script>
+    <script src="./bundle.js"></script>
+
 </body>
 
 </html>

@@ -50,3 +50,5 @@ const stateArray = {
   wisconsin: "WI",
   wyoming: "WY",
 };
+
+module.exports = stateArray;

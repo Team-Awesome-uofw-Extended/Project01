@@ -1,3 +1,7 @@
+require("!style-loader!css-loader!./node_modules/materialize-css/dist/css/materialize.css");
+const stateArray = require("./stateArray.js");
+const axios = require("axios");
+
 const IdontCareItsFree = "DVuBz9NPzOaxkWYpA8tGNG4ZhrKokozQ";
 const yelpApiKey =
   "IuAyGOEnsbAVEOfh772yr4h5WbKH7nwCmBINkNoHvhY8urogfGa0KFA79Pb8_eiThKsvKyKmIP3k_dATh2CO9KpXLT8D4QWRSsQy91N1weylIVAUHMYAFuGL_6OTXnYx";
@@ -30,7 +34,7 @@ const cityFromCoords = async (lat, long) => {
   const res = await axios.get(
     `${getCityDir}?key=${IdontCareItsFree}&location=${lat},${long}`
   );
-  locationData = res.data.results[0].locations[0];
+  let locationData = res.data.results[0].locations[0];
   cityFromNavigator = locationData.adminArea5;
   setDefaultLocation(cityFromNavigator);
 };
@@ -67,6 +71,12 @@ const paginateDown = async () => {
     console.error(error);
   }
 };
+document.getElementById("paginateUp").addEventListener("click", () => {
+  paginateUp();
+});
+document.getElementById("paginateDown").addEventListener("click", () => {
+  paginateDown();
+});
 // Need to change this to filter an array of states for two letter abbreviations to allow other states
 const getYelp = async (name, city, state, street) => {
   state = state.toLowerCase();
@@ -77,14 +87,15 @@ const getYelp = async (name, city, state, street) => {
       params: {
         name: name,
         address1: street,
-        city: stateAbbreviated,
-        state: "WI",
+        city: city,
+        state: stateAbbreviated,
         country: "US",
       },
       headers: {
         Authorization: `Bearer ${yelpApiKey}`,
       },
     });
+
     activeYelpRequest = res.data.businesses[0];
 
     let queryDetailID = res.data.businesses[0].id;
@@ -104,18 +115,18 @@ const getYelp = async (name, city, state, street) => {
 };
 
 const setCheckedState = (target) => {
-  if (window.sessionStorage.crawlArray) {
-    let tempArray = window.sessionStorage.getItem("crawlArray");
-    if (tempArray.indexOf(target) === -1) {
+  if (window.localStorage.crawlArray) {
+    currentCrawl = JSON.parse(window.localStorage.getItem("crawlArray"));
+    if (currentCrawl.indexOf(target) === -1) {
       currentCrawl.push(target);
-      window.sessionStorage.setItem("crawlArray", currentCrawl);
+      window.localStorage.setItem("crawlArray", JSON.stringify(currentCrawl));
     } else {
       currentCrawl = currentCrawl.filter((pubID) => pubID !== target);
-      window.sessionStorage.setItem("crawlArray", currentCrawl);
+      window.localStorage.setItem("crawlArray", JSON.stringify(currentCrawl));
     }
-  } else if (!window.sessionStorage.crawlArray) {
+  } else if (!window.localStorage.crawlArray) {
     currentCrawl.push(target);
-    window.sessionStorage.setItem("crawlArray", currentCrawl);
+    window.localStorage.setItem("crawlArray", JSON.stringify(currentCrawl));
   }
 };
 
@@ -146,8 +157,8 @@ const insertData = (data) => {
     let checkBoxLabel = document.createElement("label");
     let checkBox = document.createElement("input");
     let checkedStatus;
-    if (window.sessionStorage.crawlArray) {
-      let temporaryArray = window.sessionStorage.getItem("crawlArray");
+    if (window.localStorage.crawlArray) {
+      let temporaryArray = window.localStorage.getItem("crawlArray");
       if (temporaryArray.indexOf(data[i].id) !== -1) {
         checkedStatus = "checked";
         checkBox.setAttribute("checked", checkedStatus);
