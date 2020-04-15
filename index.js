@@ -1,8 +1,21 @@
+const M = require("!style-loader!css-loader!./node_modules/materialize-css/dist/css/materialize.css");
+require("!style-loader!css-loader!./assets/css/style.css");
+require("./assets/js/firebase.js");
+const stateArray = require("./stateArray.js");
+const axios = require("axios");
+
+const IdontCareItsFree = "DVuBz9NPzOaxkWYpA8tGNG4ZhrKokozQ";
+const yelpApiKey =
+  "IuAyGOEnsbAVEOfh772yr4h5WbKH7nwCmBINkNoHvhY8urogfGa0KFA79Pb8_eiThKsvKyKmIP3k_dATh2CO9KpXLT8D4QWRSsQy91N1weylIVAUHMYAFuGL_6OTXnYx";
 const rootDir = "https://api.openbrewerydb.org";
+// Yes, I know this is kindof cheating
+const corsAnywhere = "https://cors-anywhere.herokuapp.com/";
 const getCityDir = "http://open.mapquestapi.com/geocoding/v1/reverse";
+const byTypeFilter =
+  "&by_type=micro&by_type=bar&by_type=brewpub&by_type=large&by_type=proprieter&by_type=regional";
+const yelpRoot = "https://api.yelp.com/v3/businesses";
 const perPage = "&per_page=5";
 let pageOffset = 1;
-const IdontCareItsFree = "DVuBz9NPzOaxkWYpA8tGNG4ZhrKokozQ";
 
 const imageSourceForNow = "./assets/images/beer.png";
 
@@ -10,8 +23,12 @@ const listItem = document.getElementsByClassName("collection-item");
 const locationButton = document.getElementById("changeLocationButton");
 const stateInput = document.getElementById("stateChange");
 const cityInput = document.getElementById("cityChange");
-
+let dataHolder = [];
+let currentCrawl = [];
+let activeYelpRequest = {};
 let lastGetRequest = "";
+let location = window.location.pathname;
+console.log("location", location);
 
 const setDefaultLocation = (city) => {
   byCity(city);
@@ -23,7 +40,7 @@ const cityFromCoords = async (lat, long) => {
   const res = await axios.get(
     `${getCityDir}?key=${IdontCareItsFree}&location=${lat},${long}`
   );
-  locationData = res.data.results[0].locations[0];
+  let locationData = res.data.results[0].locations[0];
   cityFromNavigator = locationData.adminArea5;
   setDefaultLocation(cityFromNavigator);
 };
@@ -33,7 +50,6 @@ window.onload = () => {
     lat = location.coords.latitude;
     long = location.coords.longitude;
     cityFromCoords(lat, long);
-    console.log(location);
   };
   const error = (error) => console.log(error);
   navigator.geolocation.getCurrentPosition(success, error);
@@ -44,25 +60,94 @@ const paginateUp = async () => {
   try {
     const res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
     clearCurrentList();
+
     insertData(res.data);
   } catch (error) {
     console.error(error);
   }
 };
+const paginateDown = async () => {
+  pageOffset = pageOffset - 1;
+  try {
+    const res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
+    clearCurrentList();
 
-// document.getElementById("idOfNextPageButton").addEventListener("click", () => {
-// e.preventDefault()
-//   pageCount++;
-// });
-// document.getElementById("idOfLastPageButton").addEventListener("click", (e) => {
-// e.preventDefault()
-//   pageCount --;
-// });
+    insertData(res.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+if (location === "/index.html" || location === "/") {
+  document.getElementById("paginateUp").addEventListener("click", () => {
+    paginateUp();
+  });
+  document.getElementById("paginateDown").addEventListener("click", () => {
+    paginateDown();
+  });
+}
+// Need to change this to filter an array of states for two letter abbreviations to allow other states
+const getYelp = async (name, city, state, street) => {
+  state = state.toLowerCase();
+  let stateAbbreviated = stateArray[state];
 
-// !! Call insertData function to insert return into ul on main screen
+  try {
+    const res = await axios.get(`${corsAnywhere}${yelpRoot}/matches`, {
+      params: {
+        name: name,
+        address1: street,
+        city: city,
+        state: stateAbbreviated,
+        country: "US",
+      },
+      headers: {
+        Authorization: `Bearer ${yelpApiKey}`,
+      },
+    });
+
+    activeYelpRequest = res.data.businesses[0];
+
+    let queryDetailID = res.data.businesses[0].id;
+    const detailRes = await axios.get(
+      `${corsAnywhere}${yelpRoot}/${queryDetailID}`,
+      {
+        headers: {
+          Authorization: `Bearer ${yelpApiKey}`,
+        },
+      }
+    );
+    activeYelpRequest = detailRes.data;
+    console.log("Rob... make this look pretty", activeYelpRequest);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const setCheckedState = (target) => {
+  if (window.localStorage.crawlArray) {
+    currentCrawl = JSON.parse(window.localStorage.getItem("crawlArray"));
+    if (currentCrawl.indexOf(target) === -1) {
+      currentCrawl.push(target);
+      window.localStorage.setItem("crawlArray", JSON.stringify(currentCrawl));
+    } else {
+      currentCrawl = currentCrawl.filter((pubID) => pubID !== target);
+      window.localStorage.setItem("crawlArray", JSON.stringify(currentCrawl));
+    }
+  } else if (!window.localStorage.crawlArray) {
+    currentCrawl.push(target);
+    window.localStorage.setItem("crawlArray", JSON.stringify(currentCrawl));
+  }
+};
+
+// const getBrewerybyID = ({ ids }) => {
+//   console.log(ids);
+//   console.log(typeof ids);
+// };
+// module.exports = getBrewerybyID();
+
 const ul = document.getElementById("brewList");
 const insertData = (data) => {
   for (var i = 0; i < data.length; i++) {
+    dataHolder.push(data[i]);
     let li = document.createElement("li");
     li.classList.add("collection-item");
     li.classList.add("avatar");
@@ -75,13 +160,31 @@ const insertData = (data) => {
     image.classList.add("circle");
     let address = document.createElement("p");
     let cityState = document.createElement("p");
+    address.classList.add("shorten");
+    cityState.classList.add("shorten");
     cityState.textContent = `${data[i].city}, ${data[i].state}`;
     li.classList.add("address");
+    li.setAttribute("id", data[i].id);
     address.textContent = data[i].street;
     let checkBoxContainer = document.createElement("p");
     checkBoxContainer.classList.add("secondary-content");
     let checkBoxLabel = document.createElement("label");
     let checkBox = document.createElement("input");
+    let checkedStatus;
+    if (window.localStorage.crawlArray) {
+      let temporaryArray = window.localStorage.getItem("crawlArray");
+      if (temporaryArray.indexOf(data[i].id) !== -1) {
+        checkedStatus = "checked";
+        checkBox.setAttribute("checked", checkedStatus);
+      } else {
+        checkBox.removeAttribute("checked");
+      }
+    }
+    checkBox.setAttribute("value", data[i].id);
+    checkBox.addEventListener("click", (e) => {
+      console.log(e.target.value);
+      setCheckedState(e.target.value);
+    });
     checkBox.setAttribute("type", "checkbox");
     let emptySpan = document.createElement("span");
     checkBoxLabel.appendChild(checkBox);
@@ -92,6 +195,12 @@ const insertData = (data) => {
     li.appendChild(address);
     li.appendChild(cityState);
     li.appendChild(checkBoxContainer);
+    li.addEventListener("click", (e) => {
+      let buisID = parseInt(e.target.id);
+      let filtered = dataHolder.filter((buis) => buis.id === buisID);
+      let selected = filtered[0];
+      getYelp(selected.name, selected.city, selected.state, selected.street);
+    });
     ul.appendChild(li);
   }
 };
@@ -108,6 +217,7 @@ const byCity = async (city) => {
     lastGetRequest = byCityRef;
     const res = await axios.get(byCityRef);
     console.log("byCity returns", res.data);
+
     insertData(res.data);
     // sendToZach(res.data)
   } catch (error) {
@@ -122,6 +232,7 @@ const byZip = async (zipCode) => {
     lastGetRequest = byZipRef;
     const res = await axios.get(byZipRef);
     console.log("byZip returns", res.data);
+
     insertData(res.data);
     // sendToZach(res.data)
   } catch (error) {
@@ -136,6 +247,7 @@ const cityState = async (city, state) => {
     lastGetRequest = cityStateRef;
     const res = await axios.get(cityStateRef);
     console.log("cityState returns", res.data);
+
     insertData(res.data);
   } catch (error) {
     console.log(error);
@@ -146,17 +258,19 @@ const cityState = async (city, state) => {
 // Gets input from change location modal
 let newState = "";
 let newCity = "";
-locationButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  newCity = cityInput.value;
-  newState = stateInput.value;
+if (location === "/index.html" || location === "/") {
+  locationButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    newCity = cityInput.value;
+    newState = stateInput.value;
 
-  if (newState === "" && newCity === "") {
-    return M.toast({ html: "Please fill this out completely" });
-  } else if (newState === "" || newState === null) {
+    if (newState === "" && newCity === "") {
+      return M.toast({ html: "Please fill this out completely" });
+    } else if (newState === "" || newState === null) {
+      clearCurrentList();
+      byCity(newCity);
+    }
     clearCurrentList();
-    byCity(newCity);
-  }
-  clearCurrentList();
-  cityState(newCity, newState);
-});
+    cityState(newCity, newState);
+  });
+}

@@ -6,3 +6,7 @@
 .map-placeholder {
     margin-top: 20px;
 }
+
+.shorten {
+    width: fit-content;
+}
