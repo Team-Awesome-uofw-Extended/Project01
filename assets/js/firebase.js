@@ -19,8 +19,8 @@ var passingCrawl = [];
 
 $(".crawl-submit").click(function() {
     crawlCode = Math.round(Math.random() * 1000000);
-    // passingCrawl = window.localStorage.getItem(crawlArray);
-    // console.log(passingCrawl);
+    passingCrawl = sessionStorage.getItem("crawlArray");
+    console.log(passingCrawl);
     console.log("Crawlcode" + crawlCode);
     console.log("success?");
     writeCrawl();
@@ -31,9 +31,6 @@ $(".crawl-submit").click(function() {
 
 function writeCrawl() {
     firebase.database().ref(`crawl-code/${crawlCode}`).set({
-        stops: "hi"
+        stops: passingCrawl
     });
 }
-
-
-
