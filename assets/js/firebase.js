@@ -1,6 +1,5 @@
 const $ = require("jquery");
 import { insertData } from "../../index.js";
-// const insertData = require("indexJS");
 
 import axios from "axios";
 
@@ -38,14 +37,19 @@ function writeCrawl() {
   });
 }
 
+let displayArray = [];
 const getById = async (id) => {
   try {
-    const res = await axios.get(
-      `https://api.openbrewerydb.org/breweries/${id}`
-    );
-    returnedCrawlData.push(res.data);
+    {
+      const res = await axios.get(
+        `https://api.openbrewerydb.org/breweries/${id}`
+      );
+      console.log(res.data);
+      returnedCrawlData.push(res.data);
+    }
+    console.log(JSON.parse(window.localStorage.crawlArray).length);
     insertData(returnedCrawlData);
-    console.log(res.data);
+    // console.log(returnedCrawl);
   } catch (error) {
     console.error(error);
   }
@@ -58,4 +62,5 @@ if (window.location.pathname === "/confirmation.html") {
     getById(crawlData[i]);
   }
   console.log("returned array", returnedCrawlData);
+  insertData(returnedCrawlData);
 }
