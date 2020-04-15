@@ -4,8 +4,11 @@ const jquery = require("jquery");
 module.exports = {
   entry: ["babel-polyfill", "./index.js", "./assets/js/firebase.js"],
   output: {
+    library: "indexJS",
+    libraryTarget: "umd",
     path: __dirname,
     filename: "bundle.js",
+    globalObject: "this",
   },
   module: {
     rules: [

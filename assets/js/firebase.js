@@ -1,5 +1,7 @@
 const $ = require("jquery");
-import { getBrewerybyID } from "../../index.js";
+import { insertData } from "../../index.js";
+// const insertData = require("indexJS");
+
 import axios from "axios";
 
 var firebaseConfig = {
@@ -42,6 +44,8 @@ const getById = async (id) => {
       `https://api.openbrewerydb.org/breweries/${id}`
     );
     returnedCrawlData.push(res.data);
+    insertData(returnedCrawlData);
+    console.log(res.data);
   } catch (error) {
     console.error(error);
   }
@@ -53,5 +57,5 @@ if (window.location.pathname === "/confirmation.html") {
   for (var i = 0; i < crawlData.length; i++) {
     getById(crawlData[i]);
   }
-  console.log(returnedCrawlData);
+  console.log("returned array", returnedCrawlData);
 }

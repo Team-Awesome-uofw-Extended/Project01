@@ -1,8 +1,10 @@
-const M = require("!style-loader!css-loader!./node_modules/materialize-css/dist/css/materialize.css");
+require("!style-loader!css-loader!./node_modules/materialize-css/dist/css/materialize.css");
+const M = require("materialize-css/dist/js/materialize.min.js");
 require("!style-loader!css-loader!./assets/css/style.css");
 require("./assets/js/firebase.js");
 const stateArray = require("./stateArray.js");
 const axios = require("axios");
+M.AutoInit();
 
 const IdontCareItsFree = "DVuBz9NPzOaxkWYpA8tGNG4ZhrKokozQ";
 const yelpApiKey =
@@ -46,13 +48,15 @@ const cityFromCoords = async (lat, long) => {
 };
 let lat, long;
 window.onload = () => {
-  const success = (location) => {
-    lat = location.coords.latitude;
-    long = location.coords.longitude;
-    cityFromCoords(lat, long);
-  };
-  const error = (error) => console.log(error);
-  navigator.geolocation.getCurrentPosition(success, error);
+  if (location === "/" || location === "/index.html") {
+    const success = (location) => {
+      lat = location.coords.latitude;
+      long = location.coords.longitude;
+      cityFromCoords(lat, long);
+    };
+    const error = (error) => console.log(error);
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
 };
 
 const paginateUp = async () => {
@@ -138,14 +142,17 @@ const setCheckedState = (target) => {
   }
 };
 
-// const getBrewerybyID = ({ ids }) => {
-//   console.log(ids);
-//   console.log(typeof ids);
-// };
-// module.exports = getBrewerybyID();
+let ul;
+if (location === "/index.html" || location === "/") {
+  ul = document.getElementById("brewList");
+} else if (location === "/confirmation.html") {
+  console.log("location running as ", location);
+  ul = document.getElementById("brewConfirmation");
+}
+export function insertData(data) {
+  console.log("data", data);
 
-const ul = document.getElementById("brewList");
-const insertData = (data) => {
+  console.log("insert function running");
   for (var i = 0; i < data.length; i++) {
     dataHolder.push(data[i]);
     let li = document.createElement("li");
@@ -203,7 +210,7 @@ const insertData = (data) => {
     });
     ul.appendChild(li);
   }
-};
+}
 
 const clearCurrentList = () => {
   do {
@@ -263,7 +270,6 @@ if (location === "/index.html" || location === "/") {
     e.preventDefault();
     newCity = cityInput.value;
     newState = stateInput.value;
-
     if (newState === "" && newCity === "") {
       return M.toast({ html: "Please fill this out completely" });
     } else if (newState === "" || newState === null) {
