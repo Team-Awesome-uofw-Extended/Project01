@@ -4,10 +4,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="./assets/css/reset.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <link rel="stylesheet" href="./assets/css/style.css" />
-  <link rel="stylesheet" href="./assets/reset.css">
-  <link rel="stylesheet" href="./materialize/dist/css/materialize.css" />
+  <link rel="stylesheet" href="./node_modules/materialize-css/dist/css/materialize.css" />
+
   <title>Document</title>
 </head>
 
@@ -26,17 +28,12 @@
     </div>
   </nav>
 
+  
   <ul class="sidenav" id="mobile-demo">
     <li><a href="./index.html">Create a Crawl</a></li>
+    <li><a class="modal-trigger" data-target="locationModal">Change Location</a></li>
     <li><a href="./crawlcode.html">Crawl Code?</a></li>
   </ul>
-
-
-
-
-
-
-
   <div id="crawl-modal" class="modal">
     <div class="modal-content">
       <h4>Enter your crawl code:</h4>
@@ -50,70 +47,38 @@
       <a href="#!" class="modal-close waves-effect orange lighten-1 btn">Submit</a>
     </div>
   </div>
+    
+    <div class="container" style="margin-bottom: 50px;">
+      <div class=" row map col s4 center-align">
+        <img src="./assets/images/map placeholder.png" alt="" class="map-placeholder ">
+      </div>
+      
 
-  <div class="container row map col s4 center-align">
-    <img src="./assets/images/map placeholder.png" alt="" class="map-placeholder ">
-    <h1 class="crwal-name">SAMPLE CRAWL</h1>
-  </div>
+      <div class="results row ">
+      <ul class="collection" id="brewList">
 
-  <div class="results row container">
-    <ul class="collection">
-      <li class="collection-item avatar">
-        <img src="./assets/images/beer.png" alt="" class="circle 7855">
-        <span class="title brewery">Good City Brewing Company</span>
-        <p class="address">2108 N Farwell Ave<br>
-          Milwaukee, Wisconsin
-        </p>
+    </div>
+    <ul class="pagination center">
+      <li class="waves-effect"><a href="#!"><i class="material-icons" onclick="paginateDown()">chevron_left</i></a></li>
 
-      </li>
-      <li class="collection-item avatar">
-        <img src="./assets/images/beer.png" alt="" class="circle 7897">
-        <span class="title">MobCraft Beer</span>
-        <p>505 S 5th St<br>
-          Milwaukee, Wisconsin
-        </p>
-
-      </li>
-      <li class="collection-item avatar">
-        <img src="./assets/images/beer.png" alt="" class="circle 7981">
-        <span class="title">Urban Harvest Brewing Company</span>
-        <p>2108 N Farwell Ave<br>
-          Milwaukee, Wisconsin
-        </p>
-
-      </li>
-      <li class="collection-item avatar">
-        <img src="./assets/images/beer.png" alt="" class="circle 7813">
-        <span class="title">Broken Bat Brewing</span>
-        <p>2108 N Farwell Ave<br>
-          Milwaukee, Wisconsin
-        </p>
-
-      </li>
-      <li class="collection-item avatar">
-        <img src="./assets/images/beer.png" alt="" class="circle 7780">
-        <span class="title">Good City Brewing Company</span>
-        <p>2108 N Farwell Ave<br>
-          Milwaukee, Wisconsin
-        </p>
-
-      </li>
-      <li class="collection-item avatar">
-        <img src="./assets/images/beer.png" alt="" class="circle 7814">
-        <span class="title">Good City Brewing Company</span>
-        <p>2108 N Farwell Ave<br>
-          Milwaukee, Wisconsin
-        </p>
-      </li>
+      <li class="waves-effect"><a href="#!"><i class="material-icons" onclick="paginateUp()">chevron_right</i></a></li>
     </ul>
+    <a href="#!" class="waves-effect orange lighten-1 btn right crawl-submit"
+      style="margin-bottom: 30px; margin-top: 20px;">Submit</a>
   </div>
-
-  <script src="./materialize/dist/js/materialize.js"></script>
-  <script src="./index.js"></script>
-  <script src="./bundle.js"></script>
+  <script src="./node_modules/materialize-css/dist/js/materialize.js"></script>
   <script>
     M.AutoInit();
   </script>
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+crossorigin="anonymous"></script>
+  <script src="./node_modules/axios/dist/axios.js"></script>
+  <!-- <script src="./stateArray.js"></script>
+  <script src="./index.js"></script> -->
+  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
+  <script src="./assets/js/firebase3.js"></script>
+
 </body>
 
 </html>

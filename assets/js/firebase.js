@@ -17,6 +17,7 @@ var database = firebase.database();
 var crawlCode = 0;
 var passingCrawl = [];
 
+
 $(".crawl-submit").click(function() {
     crawlCode = Math.round(Math.random() * 1000000);
     passingCrawl = sessionStorage.getItem("crawlArray");
@@ -34,3 +35,9 @@ function writeCrawl() {
         stops: passingCrawl
     });
 }
+
+$(".crawl-code-submit").click(function() {
+    var enteredCrawlCode = $(".crawl-code-entry").val();
+    console.log("did you enter this? " + enteredCrawlCode);
+    sessionStorage.setItem("Entered Crawl Code", enteredCrawlCode);
+})
