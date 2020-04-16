@@ -14,6 +14,7 @@ let returnedCrawlData = [];
 var crawlCode = 0;
 var passingCrawl = [];
 
+
 // $("#crawl-submit").click(function () {
 //   crawlCode = Math.round(Math.random() * 1000000);
 //   passingCrawl = JSON.parse(localStorage.getItem("crawlArray"));
@@ -24,6 +25,7 @@ var passingCrawl = [];
 //   localStorage.setItem("crawlCode", JSON.stringify(crawlCode));
 //   window.location.pathname = "./confirmation.html";
 // });
+
 
 function writeCrawl() {
   firebase.database().ref(`crawl-code/${crawlCode}`).set({
@@ -71,5 +73,20 @@ window.onload = () => {
     console.log("returned array", returnedCrawlData);
     document.getElementById("confirmation-code").innerHTML = crawlCode;
   }
-  console.log(insertData);
-};
+
+
+  console.log("returned array", returnedCrawlData);
+  document.getElementById("confirmation-code").innerHTML = crawlCode;
+}
+
+
+
+
+
+$(".crawl-code-submit").click(function() {
+    var enteredCrawlCode = $(".crawl-code-entry").val();
+    console.log("did you enter this? " + enteredCrawlCode);
+    sessionStorage.setItem("Entered Crawl Code", enteredCrawlCode);
+})
+
+
