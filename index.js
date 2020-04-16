@@ -49,21 +49,21 @@ window.onload = () => {
   console.log("running by location");
   console.log(window.location.pathname);
 
-  // if (
-  //   window.location.pathname === "/" ||
-  //   window.location.pathname === "/index.html"
-  // ) {
-  console.log("running getCurrentLocation");
-  const success = (location) => {
-    console.log("location returns", location);
-    lat = location.coords.latitude;
-    long = location.coords.longitude;
-    cityFromCoords(lat, long);
-  };
-  const error = (error) => console.log("error returned as", error);
-  console.log(navigator.geolocation.getCurrentPosition);
-  navigator.geolocation.getCurrentPosition(success, error);
-  // }
+  if (
+    window.location.pathname === "/" ||
+    window.location.pathname === "/index.html"
+  ) {
+    console.log("running getCurrentLocation");
+    const success = (location) => {
+      console.log("location returns", location);
+      lat = location.coords.latitude;
+      long = location.coords.longitude;
+      cityFromCoords(lat, long);
+    };
+    const error = (error) => console.log("error returned as", error);
+    console.log(navigator.geolocation.getCurrentPosition);
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
 
   const paginateUp = async () => {
     pageOffset = pageOffset + 1;

@@ -55,14 +55,14 @@ const getById = async (id) => {
     }
     console.log(JSON.parse(window.localStorage.crawlArray).length);
     console.log(insertData);
-    //   insertData(returnedCrawlData);
+    insertData(returnedCrawlData);
   } catch (error) {
     console.error(error);
   }
 };
 
-window.onload = () => {
-  if (window.location.pathname === "/confirmation.html") {
+if (window.location.pathname === "/confirmation.html") {
+  window.onload = () => {
     let crawlCode = JSON.parse(window.localStorage.getItem("crawlCode"));
     let crawlData = JSON.parse(window.localStorage.getItem("crawlArray"));
     for (var i = 0; i < crawlData.length; i++) {
@@ -70,6 +70,6 @@ window.onload = () => {
     }
     console.log("returned array", returnedCrawlData);
     document.getElementById("confirmation-code").innerHTML = crawlCode;
-  }
+  };
   console.log(insertData);
-};
+}
