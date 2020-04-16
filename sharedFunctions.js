@@ -40,15 +40,16 @@ const returnCrawl = async (data) => {
     console.error(error);
   }
 };
-
 let displayed = [];
 let dataHolder = [];
+
 const insertData = (data) => {
   console.log("data", data);
   console.log("insert function running");
   for (var i = 0; i < data.length; i++) {
     if (displayed.indexOf(data[i].id) === -1) {
       displayed.push(data[i].id);
+      console.log("displayed", displayed);
       dataHolder.push(data[i]);
       let li = document.createElement("li");
       li.classList.add("collection-item");
@@ -119,3 +120,40 @@ const getCrawl = (crawlCode) => {
       returnCrawl(crawlReturn);
     });
 };
+const clearCurrentList = () => {
+  do {
+    displayed.pop();
+    ul.removeChild(ul.lastElementChild);
+  } while (ul.children.length > 0);
+};
+
+const paginateUp = async () => {
+  pageOffset = pageOffset + 1;
+
+  try {
+    const res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
+    clearCurrentList();
+    insertData(res.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+const paginateDown = async () => {
+  pageOffset = pageOffset - 1;
+  try {
+    const res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
+    clearCurrentList();
+    insertData(res.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+document.getElementById("paginateUp").addEventListener("click", () => {
+  displayed = [];
+  paginateUp();
+});
+document.getElementById("paginateDown").addEventListener("click", () => {
+  displayed = [];
+  paginateDown();
+});
