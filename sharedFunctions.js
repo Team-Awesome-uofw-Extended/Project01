@@ -1,4 +1,16 @@
 const imageSourceForNow = "./assets/images/beer.png";
+
+const yelpApiKey =
+  "IuAyGOEnsbAVEOfh772yr4h5WbKH7nwCmBINkNoHvhY8urogfGa0KFA79Pb8_eiThKsvKyKmIP3k_dATh2CO9KpXLT8D4QWRSsQy91N1weylIVAUHMYAFuGL_6OTXnYx";
+const rootDir = "https://api.openbrewerydb.org";
+const perPage = "&per_page=5";
+// Yes, I know this is kindof cheating
+const corsAnywhere = "https://cors-anywhere.herokuapp.com/";
+const byTypeFilter =
+  "&by_type=micro&by_type=bar&by_type=brewpub&by_type=large&by_type=proprieter&by_type=regional";
+const yelpRoot = "https://api.yelp.com/v3/businesses";
+let pageOffset = 1;
+
 let breweriesArray = [];
 let ul;
 if (
@@ -25,31 +37,58 @@ const setCheckedState = (target) => {
   }
 };
 
+const getYelp = async (name, city, state, street) => {
+  state = state.toLowerCase();
+  let stateAbbreviated = stateArray[state];
+
+  try {
+    const res = await axios.get(`${corsAnywhere}${yelpRoot}/matches`, {
+      params: {
+        name: name,
+        address1: street,
+        city: city,
+        state: stateAbbreviated,
+        country: "US",
+      },
+      headers: {
+        Authorization: `Bearer ${yelpApiKey}`,
+      },
+    });
+
+    activeYelpRequest = res.data.businesses[0];
+
+    let queryDetailID = res.data.businesses[0].id;
+    const detailRes = await axios.get(
+      `${corsAnywhere}${yelpRoot}/${queryDetailID}`,
+      {
+        headers: {
+          Authorization: `Bearer ${yelpApiKey}`,
+        },
+      }
+    );
+    activeYelpRequest = detailRes.data;
+  } catch (error) {}
+};
+
 const returnCrawl = async (data) => {
-  console.log("running get by id");
   try {
     for (var i = 0; i < data.length; i++) {
       const res = await axios.get(
         `https://api.openbrewerydb.org/breweries/${data[i]}`
       );
       breweriesArray.push(res.data);
-      console.log("For you Zach", res.data);
+      console.log("returned from crawl code =>", breweriesArray);
     }
-    console.log(breweriesArray);
-  } catch (error) {
-    console.error(error);
-  }
+  } catch (error) {}
 };
 let displayed = [];
 let dataHolder = [];
 
 const insertData = (data) => {
-  console.log("data", data);
-  console.log("insert function running");
   for (var i = 0; i < data.length; i++) {
     if (displayed.indexOf(data[i].id) === -1) {
       displayed.push(data[i].id);
-      console.log("displayed", displayed);
+
       dataHolder.push(data[i]);
       let li = document.createElement("li");
       li.classList.add("collection-item");
@@ -85,7 +124,6 @@ const insertData = (data) => {
       }
       checkBox.setAttribute("value", data[i].id);
       checkBox.addEventListener("click", (e) => {
-        console.log(e.target.value);
         setCheckedState(e.target.value);
       });
       checkBox.setAttribute("type", "checkbox");
@@ -116,7 +154,7 @@ const getCrawl = (crawlCode) => {
     .once("value")
     .then((snapshot) => {
       let crawlReturn = snapshot.val().stops;
-      console.log("crawl returns", crawlReturn);
+
       returnCrawl(crawlReturn);
     });
 };
@@ -134,9 +172,7 @@ const paginateUp = async () => {
     const res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
     clearCurrentList();
     insertData(res.data);
-  } catch (error) {
-    console.error(error);
-  }
+  } catch (error) {}
 };
 const paginateDown = async () => {
   pageOffset = pageOffset - 1;
@@ -144,16 +180,19 @@ const paginateDown = async () => {
     const res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
     clearCurrentList();
     insertData(res.data);
-  } catch (error) {
-    console.error(error);
-  }
+  } catch (error) {}
 };
 
-document.getElementById("paginateUp").addEventListener("click", () => {
-  displayed = [];
-  paginateUp();
-});
-document.getElementById("paginateDown").addEventListener("click", () => {
-  displayed = [];
-  paginateDown();
-});
+if (
+  window.location.pathname === "/" ||
+  window.location.pathname === "/index.html"
+) {
+  document.getElementById("paginateUp").addEventListener("click", () => {
+    displayed = [];
+    paginateUp();
+  });
+  document.getElementById("paginateDown").addEventListener("click", () => {
+    displayed = [];
+    paginateDown();
+  });
+}
