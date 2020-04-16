@@ -1,7 +1,6 @@
-const $ = require("jquery");
-import { insertData } from "../../index.js";
-
-import axios from "axios";
+// const $ = require("jquery");
+// import { insertData } from "../../index.js";
+// import axios from "axios";
 
 var firebaseConfig = {
   apiKey: "AIzaSyBjS1MGlsOhRi0LHvUCLtoP8yzv46G-YPg",
@@ -14,7 +13,6 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
 var database = firebase.database();
 let returnedCrawlData = [];
 var crawlCode = 0;
@@ -24,7 +22,7 @@ $("#crawl-submit").click(function () {
   crawlCode = Math.round(Math.random() * 1000000);
   passingCrawl = JSON.parse(localStorage.getItem("crawlArray"));
   console.log(passingCrawl);
-  console.log("Crawlcode" + crawlCode);
+  console.log("crawlCode" + crawlCode);
   console.log("success?");
   writeCrawl();
   localStorage.setItem("crawlCode", JSON.stringify(crawlCode));
@@ -36,6 +34,18 @@ function writeCrawl() {
     stops: passingCrawl,
   });
 }
+
+const getCrawl = (crawlCode) => {
+  return firebase
+    .database()
+    .ref("crawl-code/" + crawlCode)
+    .once("value")
+    .then((snapshot) => {
+      let crawlReturn = snapshot.val();
+      console.log("crawl returns", crawlReturn);
+    });
+};
+getCrawl(396277);
 
 let displayArray = [];
 const getById = async (id) => {
@@ -54,8 +64,6 @@ const getById = async (id) => {
     console.error(error);
   }
 };
-
-// confirmation - code;
 
 if (window.location.pathname === "/confirmation.html") {
   let crawlCode = JSON.parse(window.localStorage.getItem("crawlCode"));

@@ -1,11 +1,3 @@
-require("!style-loader!css-loader!./node_modules/materialize-css/dist/css/materialize.css");
-const M = require("materialize-css/dist/js/materialize.min.js");
-require("!style-loader!css-loader!./assets/css/style.css");
-require("./assets/js/firebase.js");
-const stateArray = require("./stateArray.js");
-const axios = require("axios");
-M.AutoInit();
-
 const IdontCareItsFree = "DVuBz9NPzOaxkWYpA8tGNG4ZhrKokozQ";
 const yelpApiKey =
   "IuAyGOEnsbAVEOfh772yr4h5WbKH7nwCmBINkNoHvhY8urogfGa0KFA79Pb8_eiThKsvKyKmIP3k_dATh2CO9KpXLT8D4QWRSsQy91N1weylIVAUHMYAFuGL_6OTXnYx";
@@ -29,7 +21,7 @@ let dataHolder = [];
 let currentCrawl = [];
 let activeYelpRequest = {};
 let lastGetRequest = "";
-let location = window.location.pathname;
+// let location = window.location.pathname;
 console.log("location", location);
 
 const setDefaultLocation = (city) => {
@@ -47,8 +39,13 @@ const cityFromCoords = async (lat, long) => {
   setDefaultLocation(cityFromNavigator);
 };
 let lat, long;
+
 window.onload = () => {
-  if (location === "/" || location === "/index.html") {
+  console.log("running by location");
+  if (
+    window.location.pathname === "/" ||
+    window.location.pathname === "/index.html"
+  ) {
     const success = (location) => {
       lat = location.coords.latitude;
       long = location.coords.longitude;
@@ -75,20 +72,19 @@ const paginateDown = async () => {
   try {
     const res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
     clearCurrentList();
-
     insertData(res.data);
   } catch (error) {
     console.error(error);
   }
 };
-if (location === "/index.html" || location === "/") {
-  document.getElementById("paginateUp").addEventListener("click", () => {
-    paginateUp();
-  });
-  document.getElementById("paginateDown").addEventListener("click", () => {
-    paginateDown();
-  });
-}
+
+document.getElementById("paginateUp").addEventListener("click", () => {
+  paginateUp();
+});
+document.getElementById("paginateDown").addEventListener("click", () => {
+  paginateDown();
+});
+
 // Need to change this to filter an array of states for two letter abbreviations to allow other states
 const getYelp = async (name, city, state, street) => {
   state = state.toLowerCase();
@@ -143,76 +139,77 @@ const setCheckedState = (target) => {
 };
 
 let ul;
-if (location === "/index.html" || location === "/") {
-  ul = document.getElementById("brewList");
-} else if (location === "/confirmation.html") {
-  console.log("location running as ", location);
-  ul = document.getElementById("brewConfirmation");
-}
+// if (location === "/index.html" || location === "/") {
+//   ul = document.getElementById("brewList");
+// } else if (location === "/confirmation.html") {
+//   console.log("location running as ", location);
+//   ul = document.getElementById("brewConfirmation");
+// }
+ul = document.getElementById("brewList");
 let displayed = [];
-export function insertData(data) {
+function insertData(data) {
   console.log("data", data);
   console.log("insert function running");
   for (var i = 0; i < data.length; i++) {
-    if (displayed.indexOf(data[i].id) === -1) {
-      displayed.push(data[i].id);
-      dataHolder.push(data[i]);
-      let li = document.createElement("li");
-      li.classList.add("collection-item");
-      li.classList.add("avatar");
-      let titleSpan = document.createElement("span");
-      titleSpan.textContent = data[i].name;
-      titleSpan.classList.add("title");
-      titleSpan.classList.add("brewery");
-      var image = document.createElement("img");
-      image.src = imageSourceForNow;
-      image.classList.add("circle");
-      let address = document.createElement("p");
-      let cityState = document.createElement("p");
-      address.classList.add("shorten");
-      cityState.classList.add("shorten");
-      cityState.textContent = `${data[i].city}, ${data[i].state}`;
-      li.classList.add("address");
-      li.setAttribute("id", data[i].id);
-      address.textContent = data[i].street;
-      let checkBoxContainer = document.createElement("p");
-      checkBoxContainer.classList.add("secondary-content");
-      let checkBoxLabel = document.createElement("label");
-      let checkBox = document.createElement("input");
-      let checkedStatus;
-      if (window.localStorage.crawlArray) {
-        let temporaryArray = window.localStorage.getItem("crawlArray");
-        if (temporaryArray.indexOf(data[i].id) !== -1) {
-          checkedStatus = "checked";
-          checkBox.setAttribute("checked", checkedStatus);
-        } else {
-          checkBox.removeAttribute("checked");
-        }
+    // if (displayed.indexOf(data[i].id) === -1) {
+    // displayed.push(data[i].id);
+    dataHolder.push(data[i]);
+    let li = document.createElement("li");
+    li.classList.add("collection-item");
+    li.classList.add("avatar");
+    let titleSpan = document.createElement("span");
+    titleSpan.textContent = data[i].name;
+    titleSpan.classList.add("title");
+    titleSpan.classList.add("brewery");
+    var image = document.createElement("img");
+    image.src = imageSourceForNow;
+    image.classList.add("circle");
+    let address = document.createElement("p");
+    let cityState = document.createElement("p");
+    address.classList.add("shorten");
+    cityState.classList.add("shorten");
+    cityState.textContent = `${data[i].city}, ${data[i].state}`;
+    li.classList.add("address");
+    li.setAttribute("id", data[i].id);
+    address.textContent = data[i].street;
+    let checkBoxContainer = document.createElement("p");
+    checkBoxContainer.classList.add("secondary-content");
+    let checkBoxLabel = document.createElement("label");
+    let checkBox = document.createElement("input");
+    let checkedStatus;
+    if (window.localStorage.crawlArray) {
+      let temporaryArray = window.localStorage.getItem("crawlArray");
+      if (temporaryArray.indexOf(data[i].id) !== -1) {
+        checkedStatus = "checked";
+        checkBox.setAttribute("checked", checkedStatus);
+      } else {
+        checkBox.removeAttribute("checked");
       }
-      checkBox.setAttribute("value", data[i].id);
-      checkBox.addEventListener("click", (e) => {
-        console.log(e.target.value);
-        setCheckedState(e.target.value);
-      });
-      checkBox.setAttribute("type", "checkbox");
-      let emptySpan = document.createElement("span");
-      checkBoxLabel.appendChild(checkBox);
-      checkBoxLabel.appendChild(emptySpan);
-      checkBoxContainer.appendChild(checkBoxLabel);
-      li.appendChild(image);
-      li.appendChild(titleSpan);
-      li.appendChild(address);
-      li.appendChild(cityState);
-      li.appendChild(checkBoxContainer);
-      li.addEventListener("click", (e) => {
-        let buisID = parseInt(e.target.id);
-        let filtered = dataHolder.filter((buis) => buis.id === buisID);
-        let selected = filtered[0];
-        getYelp(selected.name, selected.city, selected.state, selected.street);
-      });
-      ul.appendChild(li);
     }
+    checkBox.setAttribute("value", data[i].id);
+    checkBox.addEventListener("click", (e) => {
+      console.log(e.target.value);
+      setCheckedState(e.target.value);
+    });
+    checkBox.setAttribute("type", "checkbox");
+    let emptySpan = document.createElement("span");
+    checkBoxLabel.appendChild(checkBox);
+    checkBoxLabel.appendChild(emptySpan);
+    checkBoxContainer.appendChild(checkBoxLabel);
+    li.appendChild(image);
+    li.appendChild(titleSpan);
+    li.appendChild(address);
+    li.appendChild(cityState);
+    li.appendChild(checkBoxContainer);
+    li.addEventListener("click", (e) => {
+      let buisID = parseInt(e.target.id);
+      let filtered = dataHolder.filter((buis) => buis.id === buisID);
+      let selected = filtered[0];
+      getYelp(selected.name, selected.city, selected.state, selected.street);
+    });
+    ul.appendChild(li);
   }
+  // }
 }
 
 const clearCurrentList = () => {
