@@ -65,9 +65,8 @@ if (window.location.pathname === "/confirmation.html") {
   document.getElementById("submitCrawlCode").addEventListener("click", () => {
     writeCrawl();
   });
-  document.getElementById("submitCrawlCode").addEventListener("click", () => {
-    let input = document.getElementById("codeInput").value;
-    // console.log(input);
-    getCrawl(input);
-  });
 }
+document.getElementById("submitCrawlCode").addEventListener("click", () => {
+  let input = document.getElementById("codeInput").value;
+  getCrawl(input);
+});

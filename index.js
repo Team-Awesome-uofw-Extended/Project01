@@ -131,21 +131,21 @@ window.onload = () => {
     }
   };
 
-  const setCheckedState = (target) => {
-    if (window.localStorage.crawlArray) {
-      currentCrawl = JSON.parse(window.localStorage.getItem("crawlArray"));
-      if (currentCrawl.indexOf(target) === -1) {
-        currentCrawl.push(target);
-        window.localStorage.setItem("crawlArray", JSON.stringify(currentCrawl));
-      } else {
-        currentCrawl = currentCrawl.filter((pubID) => pubID !== target);
-        window.localStorage.setItem("crawlArray", JSON.stringify(currentCrawl));
-      }
-    } else if (!window.localStorage.crawlArray) {
-      currentCrawl.push(target);
-      window.localStorage.setItem("crawlArray", JSON.stringify(currentCrawl));
-    }
-  };
+  // const setCheckedState = (target) => {
+  //   if (window.localStorage.crawlArray) {
+  //     currentCrawl = JSON.parse(window.localStorage.getItem("crawlArray"));
+  //     if (currentCrawl.indexOf(target) === -1) {
+  //       currentCrawl.push(target);
+  //       window.localStorage.setItem("crawlArray", JSON.stringify(currentCrawl));
+  //     } else {
+  //       currentCrawl = currentCrawl.filter((pubID) => pubID !== target);
+  //       window.localStorage.setItem("crawlArray", JSON.stringify(currentCrawl));
+  //     }
+  //   } else if (!window.localStorage.crawlArray) {
+  //     currentCrawl.push(target);
+  //     window.localStorage.setItem("crawlArray", JSON.stringify(currentCrawl));
+  //   }
+  // };
 
   // let ul;
   // if (

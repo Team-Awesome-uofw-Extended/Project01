@@ -1,4 +1,5 @@
 const imageSourceForNow = "./assets/images/beer.png";
+let breweriesArray = [];
 let ul;
 if (
   window.location.pathname === "/index.html" ||
@@ -8,6 +9,37 @@ if (
 } else if (window.location.pathname === "/confirmation.html") {
   ul = document.getElementById("brewConfirmation");
 }
+const setCheckedState = (target) => {
+  if (window.localStorage.crawlArray) {
+    currentCrawl = JSON.parse(window.localStorage.getItem("crawlArray"));
+    if (currentCrawl.indexOf(target) === -1) {
+      currentCrawl.push(target);
+      window.localStorage.setItem("crawlArray", JSON.stringify(currentCrawl));
+    } else {
+      currentCrawl = currentCrawl.filter((pubID) => pubID !== target);
+      window.localStorage.setItem("crawlArray", JSON.stringify(currentCrawl));
+    }
+  } else if (!window.localStorage.crawlArray) {
+    currentCrawl.push(target);
+    window.localStorage.setItem("crawlArray", JSON.stringify(currentCrawl));
+  }
+};
+
+const returnCrawl = async (data) => {
+  console.log("running get by id");
+  try {
+    for (var i = 0; i < data.length; i++) {
+      const res = await axios.get(
+        `https://api.openbrewerydb.org/breweries/${data[i]}`
+      );
+      breweriesArray.push(res.data);
+      console.log("For you Zach", res.data);
+    }
+    console.log(breweriesArray);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 let displayed = [];
 let dataHolder = [];
@@ -82,7 +114,8 @@ const getCrawl = (crawlCode) => {
     .ref("crawl-code/" + crawlCode)
     .once("value")
     .then((snapshot) => {
-      let crawlReturn = snapshot.val();
+      let crawlReturn = snapshot.val().stops;
       console.log("crawl returns", crawlReturn);
+      returnCrawl(crawlReturn);
     });
 };
