@@ -54,6 +54,47 @@ var breweries = [{
     "updated_at": "2018-08-24T16:44:28.217Z",
     "tag_list": []
     }];
+    const getAddress = address => {
+        return new Promise((resolve, reject) => {
+            const geocoder = new google.maps.Geocoder();
+            geocoder.geocode({address: address}, (results, status) => {
+                if (status === 'OK') {
+                    resolve(results[0].geometry.location);
+                } else {
+                    reject(status);
+                }    
+            });    
+        });
+    };
+    function makeCallback(brewInfo,map) {
+        var geocodeCallBack = function(results, status) {
+            var contentString = '<div>' + brewInfo.name + '</div>';
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+              }); 
+            console.log(map)
+              var marker = new google.maps.Marker({
+                position: results[0].geometry.location,
+                map: map
+              });
+              console.log(results[0])
+              marker.addListener('click', function() {
+                infowindow.open(map, marker);
+              });
+              map.panTo(marker.position);
+
+           /* var i = addressIndex; 
+            alert(address[i].name + " " + results[0].formatted_address);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location,
+                // use address[i].name
+                title: results[0].formatted_address
+            }); */
+        }
+        return geocodeCallBack;
+    }
+    
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 15,
@@ -64,30 +105,46 @@ function initMap() {
   }
   function setMarkers(geocoder, map) {
     for (i =0; i < breweries.length; i++){
-    geocoder.geocode({'address': breweries[i].street + ', ' + breweries[i].city + ', ' + breweries[i].state}, function(results, status) {
-      if (status === 'OK') {
+        var brewInfo = breweries[i]
+        console.log(brewInfo)
+        //var contentString = '<div>' + brewInfo + '</div>';
+        //let location = await getAddress(breweries[i].street + ', ' + breweries[i].city + ', ' + breweries[i].state);
+        geocoder.geocode( {'address': breweries[i].street + ', ' + breweries[i].city + ', ' + breweries[i].state}, makeCallback(brewInfo,map));
+        //geocoder.geocode({'address': breweries[i].street + ', ' + breweries[i].city + ', ' + breweries[i].state}, function(results, status) {
         //map.setCenter(results[0].geometry.location);
-        var content = breweries[i].name
-        console.log(content)
-        var marker = new google.maps.Marker({
+        /*After the geocoder function runs only the last instance of the for loop is available to write to infowindows.  not sure why.
+        Consider using simplier ways to get info windows to show. learn more about geocoder function and why it might do this.  Bug Shankar*/
+        //console.log(content)
+        
+        /*var infowindow = new google.maps.InfoWindow({
+            content: contentString
+          }); 
+        
+          var marker = new google.maps.Marker({
+            position: results[0].geometry.location,
+            map: map
+          });
+          console.log(results[0])
+          marker.addListener('click', function() {
+            infowindow.open(map, marker);
+          }); */
+        
+        //console.log(location)
+        /*var marker = new google.maps.Marker({
           map: map,
           position: results[0].geometry.location
         });
         var infowindow = new google.maps.InfoWindow()
         google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
             return function() {
-               infowindow.setContent(content);
+               infowindow.setContent(brewInfo);
                infowindow.open(map,marker);
             };
-        })(marker,content,infowindow)); 
-
-      } else {
-        alert('Geocode was not successful for the following reason: ' + status);
-      }
-    });
-    var map = new google.maps.Map(
-        document.getElementById('map'), {zoom: 12, center: centerLoc});
+        })(marker,brewInfo,infowindow));  */
+    } 
+    //)};
+    //var map = new google.maps.Map(
+        //document.getElementById('map'), {zoom: 12, center: centerLoc});
     // The marker, positioned at Uluru
     //var marker = new google.maps.Marker({position: centerLoc, map: map});
-  }
   }
