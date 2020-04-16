@@ -1,5 +1,6 @@
 const $ = require("jquery");
-import { getBrewerybyID } from "../../index.js";
+import { insertData } from "../../index.js";
+
 import axios from "axios";
 
 var firebaseConfig = {
@@ -37,16 +38,25 @@ function writeCrawl() {
   });
 }
 
+let displayArray = [];
 const getById = async (id) => {
   try {
-    const res = await axios.get(
-      `https://api.openbrewerydb.org/breweries/${id}`
-    );
-    returnedCrawlData.push(res.data);
+    {
+      const res = await axios.get(
+        `https://api.openbrewerydb.org/breweries/${id}`
+      );
+      console.log(res.data);
+      returnedCrawlData.push(res.data);
+    }
+    console.log(JSON.parse(window.localStorage.crawlArray).length);
+    insertData(returnedCrawlData);
+    // console.log(returnedCrawl);
   } catch (error) {
     console.error(error);
   }
 };
+
+// confirmation - code;
 
 if (window.location.pathname === "/confirmation.html") {
   let crawlCode = JSON.parse(window.localStorage.getItem("crawlCode"));
@@ -54,7 +64,8 @@ if (window.location.pathname === "/confirmation.html") {
   for (var i = 0; i < crawlData.length; i++) {
     getById(crawlData[i]);
   }
-  console.log(returnedCrawlData);
+  console.log("returned array", returnedCrawlData);
+  document.getElementById("confirmation-code").innerHTML = crawlCode;
 }
 
 
