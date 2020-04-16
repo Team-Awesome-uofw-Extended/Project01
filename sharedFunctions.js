@@ -75,3 +75,14 @@ const insertData = (data) => {
     }
   }
 };
+
+const getCrawl = (crawlCode) => {
+  return firebase
+    .database()
+    .ref("crawl-code/" + crawlCode)
+    .once("value")
+    .then((snapshot) => {
+      let crawlReturn = snapshot.val();
+      console.log("crawl returns", crawlReturn);
+    });
+};

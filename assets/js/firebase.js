@@ -14,34 +14,22 @@ let returnedCrawlData = [];
 var crawlCode = 0;
 var passingCrawl = [];
 
-// $("#crawl-submit").click(function () {
-//   crawlCode = Math.round(Math.random() * 1000000);
-//   passingCrawl = JSON.parse(localStorage.getItem("crawlArray"));
-//   console.log(passingCrawl);
-//   console.log("crawlCode" + crawlCode);
-//   console.log("success?");
-//   writeCrawl();
-//   localStorage.setItem("crawlCode", JSON.stringify(crawlCode));
-//   window.location.pathname = "./confirmation.html";
-// });
+$(".crawl-submit").click(function () {
+  crawlCode = Math.round(Math.random() * 1000000);
+  passingCrawl = JSON.parse(localStorage.getItem("crawlArray"));
+  console.log(passingCrawl);
+  console.log("crawlCode" + crawlCode);
+  console.log("success?");
+  //   writeCrawl();
+  localStorage.setItem("crawlCode", JSON.stringify(crawlCode));
+  window.location.pathname = "./confirmation.html";
+});
 
 function writeCrawl() {
   firebase.database().ref(`crawl-code/${crawlCode}`).set({
     stops: passingCrawl,
   });
 }
-
-const getCrawl = (crawlCode) => {
-  return firebase
-    .database()
-    .ref("crawl-code/" + crawlCode)
-    .once("value")
-    .then((snapshot) => {
-      let crawlReturn = snapshot.val();
-      console.log("crawl returns", crawlReturn);
-    });
-};
-getCrawl(396277);
 
 let displayArray = [];
 const getById = async (id) => {
@@ -72,4 +60,14 @@ if (window.location.pathname === "/confirmation.html") {
     document.getElementById("confirmation-code").innerHTML = crawlCode;
   };
   console.log(insertData);
+}
+if (window.location.pathname === "/confirmation.html") {
+  document.getElementById("submitCrawlCode").addEventListener("click", () => {
+    writeCrawl();
+  });
+  document.getElementById("submitCrawlCode").addEventListener("click", () => {
+    let input = document.getElementById("codeInput").value;
+    // console.log(input);
+    getCrawl(input);
+  });
 }
