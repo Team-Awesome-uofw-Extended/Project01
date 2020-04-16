@@ -1,7 +1,3 @@
-const $ = require("jquery");
-import { getBrewerybyID } from "../../index.js";
-import axios from "axios";
-
 var firebaseConfig = {
   apiKey: "AIzaSyBjS1MGlsOhRi0LHvUCLtoP8yzv46G-YPg",
   authDomain: "brewcrawler-ae0b1.firebaseapp.com",
@@ -13,23 +9,23 @@ var firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
 var database = firebase.database();
 let returnedCrawlData = [];
 var crawlCode = 0;
 var passingCrawl = [];
 
 
-$("#crawl-submit").click(function () {
-  crawlCode = Math.round(Math.random() * 1000000);
-  passingCrawl = JSON.parse(localStorage.getItem("crawlArray"));
-  console.log(passingCrawl);
-  console.log("Crawlcode" + crawlCode);
-  console.log("success?");
-  writeCrawl();
-  localStorage.setItem("crawlCode", JSON.stringify(crawlCode));
-  window.location.pathname = "./confirmation.html";
-});
+// $("#crawl-submit").click(function () {
+//   crawlCode = Math.round(Math.random() * 1000000);
+//   passingCrawl = JSON.parse(localStorage.getItem("crawlArray"));
+//   console.log(passingCrawl);
+//   console.log("crawlCode" + crawlCode);
+//   console.log("success?");
+//   writeCrawl();
+//   localStorage.setItem("crawlCode", JSON.stringify(crawlCode));
+//   window.location.pathname = "./confirmation.html";
+// });
+
 
 function writeCrawl() {
   firebase.database().ref(`crawl-code/${crawlCode}`).set({
@@ -37,24 +33,50 @@ function writeCrawl() {
   });
 }
 
+const getCrawl = (crawlCode) => {
+  return firebase
+    .database()
+    .ref("crawl-code/" + crawlCode)
+    .once("value")
+    .then((snapshot) => {
+      let crawlReturn = snapshot.val();
+      console.log("crawl returns", crawlReturn);
+    });
+};
+getCrawl(396277);
+
+let displayArray = [];
 const getById = async (id) => {
   try {
-    const res = await axios.get(
-      `https://api.openbrewerydb.org/breweries/${id}`
-    );
-    returnedCrawlData.push(res.data);
+    {
+      const res = await axios.get(
+        `https://api.openbrewerydb.org/breweries/${id}`
+      );
+      console.log(res.data);
+      returnedCrawlData.push(res.data);
+    }
+    console.log(JSON.parse(window.localStorage.crawlArray).length);
+    console.log(insertData);
+    //   insertData(returnedCrawlData);
   } catch (error) {
     console.error(error);
   }
 };
 
-if (window.location.pathname === "/confirmation.html") {
-  let crawlCode = JSON.parse(window.localStorage.getItem("crawlCode"));
-  let crawlData = JSON.parse(window.localStorage.getItem("crawlArray"));
-  for (var i = 0; i < crawlData.length; i++) {
-    getById(crawlData[i]);
+window.onload = () => {
+  if (window.location.pathname === "/confirmation.html") {
+    let crawlCode = JSON.parse(window.localStorage.getItem("crawlCode"));
+    let crawlData = JSON.parse(window.localStorage.getItem("crawlArray"));
+    for (var i = 0; i < crawlData.length; i++) {
+      getById(crawlData[i]);
+    }
+    console.log("returned array", returnedCrawlData);
+    document.getElementById("confirmation-code").innerHTML = crawlCode;
   }
-  console.log(returnedCrawlData);
+
+
+  console.log("returned array", returnedCrawlData);
+  document.getElementById("confirmation-code").innerHTML = crawlCode;
 }
 
 
@@ -66,4 +88,5 @@ $(".crawl-code-submit").click(function() {
     console.log("did you enter this? " + enteredCrawlCode);
     sessionStorage.setItem("Entered Crawl Code", enteredCrawlCode);
 })
+
 
