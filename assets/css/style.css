@@ -1,12 +1,26 @@
 .brand-logo {
-    margin: 5px;
-    filter: invert(100%);
+  margin: 5px;
+  filter: invert(100%);
 }
 
 .map-placeholder {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .shorten {
-    width: fit-content;
+  width: fit-content;
+}
+
+.title {
+  margin-right: 85px;
+  display: block;
+}
+
+#map {
+  height: min(500px, 40vh);
+  max-width: min(700px, 100%);
+}
+
+nav {
+  margin-bottom: 20px;
 }
