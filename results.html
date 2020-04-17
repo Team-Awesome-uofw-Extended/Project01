@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./assets/css/reset.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="./node_modules/materialize-css/dist/css/materialize.css" />
+  <title>Document</title>
+  <style>
+    /* Set the size of the div element that contains the map */
+   #map {
+     height: 350px;  /* The height is 400 pixels */
+     width: 450px;  /* The width is the width of the web page */
+    }
+ </style>
+</head>
+
+<body>
+  <nav>
+    <div class="nav-wrapper row  orange lighten-1">
+      <div class="container">
+        <a href="#!" id="logo-container" class="brand-logo"><img src="./assets/images/beer.png" alt="" height="40px"
+            srcset=""></a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="#">Create a Crawl</a></li>
+          <li><a class="modal-trigger" data-target="locationModal">Change Location</a></li>
+          <li><a class="modal-trigger" data-target="crawl-modal" href="./crawlcode.html">Crawl Code?</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <ul class="sidenav" id="mobile-demo">
+    <li><a href="#">Create a Crawl</a></li>
+    <li><a class="modal-trigger" data-target="locationModal">Change Location</a></li>
+    <li><a href="./crawlcode.html">Crawl Code?</a></li>
+  </ul>
+
+
+
+
+
+
+
+  <div id="crawl-modal" class="modal">
+    <div class="modal-content">
+      <h4>Enter your crawl code:</h4>
+      <p>
+        <form action="">
+          <input type="text" name="crawl-code" id="">
+        </form>
+      </p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect orange lighten-1 btn">Submit</a>
+    </div>
+  </div>
+
+  <div id="locationModal" class="modal">
+    <div class="modal-content">
+      <h4>Change Location</h4>
+      <div class="row">
+        <div class="col s12">
+          <div class="row">
+            <div class="input-field col s12 l6">
+              <i class="material-icons prefix">location_searching</i>
+              <input type="text" id="cityChange">
+              <label for="cityChange">City</label>
+            </div>
+            <div class="input-field col s12 l6">
+              <i class="material-icons prefix">location_searching</i>
+              <input type="text" id="stateChange">
+              <label for="stateChange">State</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect orange lighten-1 btn right" id="changeLocationButton">Change
+        Location</a>
+    </div>
+  </div>
+
+  <div class="container" style="margin-bottom: 50px;"></div>
+    <div class=" row map col s4 center-align" id="map"></div>
+  
+
+    <div class="results row">
+      <ul class="collection" id="brewList">
+
+    </div>
+    <ul class="pagination center">
+      <li class="waves-effect"><a href="#!"><i class="material-icons" onclick="paginateDown()">chevron_left</i></a></li>
+
+      <li class="waves-effect"><a href="#!"><i class="material-icons" onclick="paginateUp()">chevron_right</i></a></li>
+    </ul>
+    <a href="#!" class="waves-effect orange lighten-1 btn right crawl-submit"
+      style="margin-bottom: 30px; margin-top: 20px;">Submit</a>
+  </div>
+  <script src="./node_modules/materialize-css/dist/js/materialize.js"></script>
+  <script>
+M.AutoInit();
+  </script>
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+  <script src="./node_modules/uuidv4/build/lib/uuidv4.js"></script>
+  <script src="./node_modules/axios/dist/axios.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
+  <script src="./stateArray.js"></script>
+  <script src="./results.js"></script>
+  <script src="./assets/js/firebase.js"></script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqi3hooJuDl13TM-9Wz9WadChisSytWCA&callback=initMap">
+    </script>
+</body>
+
+</html>
