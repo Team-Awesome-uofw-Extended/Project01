@@ -75,7 +75,7 @@ var breweries = [{
                 position: results[0].geometry.location,
                 map: map
               });
-              console.log(results[0])
+              //console.log(results[0])
               marker.addListener('click', function() {
                 infowindow.open(map, marker);
               });
@@ -96,8 +96,23 @@ function initMap() {
   function setMarkers(geocoder, map) {
     for (i =0; i < breweries.length; i++){
         var brewInfo = breweries[i]
-        console.log(brewInfo)
+        //console.log(brewInfo)
         geocoder.geocode( {'address': breweries[i].street + ', ' + breweries[i].city + ', ' + breweries[i].state}, makeCallback(brewInfo,map));
         
     } 
 }
+function listBreweries() {
+  var div = $("#brewList");
+
+  div.empty();
+  for (i in breweries){
+    var fields = ["name","brewery_type","street","city","phone","website_url"]
+    for (v in fields){
+      var span = $("<span>")
+      console.log(breweries[i])
+      span.text(breweries[i])
+      div.append(span, $("<br>"));
+    }
+  }
+}
+listBreweries()
