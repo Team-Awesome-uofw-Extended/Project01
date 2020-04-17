@@ -17,13 +17,13 @@ var passingCrawl = [];
 $("#crawl-submit").click(function () {
   crawlCode = Math.round(Math.random() * 1000000);
   passingCrawl = JSON.parse(localStorage.getItem("crawlArray"));
-
   localStorage.setItem("crawlCode", JSON.stringify(crawlCode));
   window.location.pathname = "./confirmation.html";
+  writeCrawl();
 });
 
 function writeCrawl() {
-  firebase.database().ref(`crawl-code/${crawlCode}`).set({
+  firebase.database().ref('crawl-code/'+crawlCode).set({
     stops: passingCrawl,
   });
 }

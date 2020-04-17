@@ -126,6 +126,7 @@ const insertData = (data) => {
       checkBox.addEventListener("click", (e) => {
         setCheckedState(e.target.value);
       });
+      console.log('window'+window.location.pathname)
       checkBox.setAttribute("type", "checkbox");
       let emptySpan = document.createElement("span");
       checkBoxLabel.appendChild(checkBox);
@@ -135,7 +136,10 @@ const insertData = (data) => {
       li.appendChild(titleSpan);
       li.appendChild(address);
       li.appendChild(cityState);
-      li.appendChild(checkBoxContainer);
+      if (window.location.href.indexOf("index") > -1){
+        li.appendChild(checkBoxContainer);
+        console.log("it works?")
+      }
       li.addEventListener("click", (e) => {
         let buisID = parseInt(e.target.id);
         let filtered = dataHolder.filter((buis) => buis.id === buisID);
