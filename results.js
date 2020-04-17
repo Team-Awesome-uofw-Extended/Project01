@@ -110,7 +110,7 @@ function listBreweries() {
     for (v in fields){
       var span = $("<span>")
       console.log(breweries[i])
-      span.text(breweries[i])
+      span.text(hi)
       div.append(span, $("<br>"));
     }
   }
