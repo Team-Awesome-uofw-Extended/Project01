@@ -228,7 +228,7 @@ window.onload = () => {
       ul.removeChild(ul.lastElementChild);
     } while (ul.children.length > 0);
   };
-
+  
   const byCity = async (city) => {
     try {
       let byCityRef = `${rootDir}/breweries?by_city=${city}${perPage}`;
