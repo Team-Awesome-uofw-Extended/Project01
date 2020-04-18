@@ -186,8 +186,13 @@ window.onload = () => {
   // Gets input from change location modal
   let newState = "";
   let newCity = "";
-  if (location === "/index.html" || location === "/") {
+  if (
+    window.location.pathname === "/index.html" ||
+    window.location.pathname === "/"
+  ) {
     locationButton.addEventListener("click", (e) => {
+      console.log("running change location");
+
       e.preventDefault();
       newCity = cityInput.value;
       newState = stateInput.value;
@@ -203,10 +208,9 @@ window.onload = () => {
   }
 };
 
-
 //modal trigger for confirmation page
-$(window).on('load',function(){
-  if (window.location.href.indexOf("confirmation") > -1){
-    $('#crawl-confirmation').modal('open')
-}
+$(window).on("load", function () {
+  if (window.location.href.indexOf("confirmation") > -1) {
+    $("#crawl-confirmation").modal("open");
+  }
 });

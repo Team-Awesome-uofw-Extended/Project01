@@ -23,9 +23,12 @@ $("#crawl-submit").click(function () {
 });
 
 function writeCrawl() {
-  firebase.database().ref('crawl-code/'+crawlCode).set({
-    stops: passingCrawl,
-  });
+  firebase
+    .database()
+    .ref("crawl-code/" + crawlCode)
+    .set({
+      stops: passingCrawl,
+    });
 }
 
 let displayArray = [];
@@ -52,11 +55,7 @@ if (window.location.pathname === "/confirmation.html") {
     $("#confirmation-code").append(crawlCode);
   };
 }
-if (window.location.pathname === "/confirmation.html") {
-  document.getElementById("submitCrawlCode").addEventListener("click", () => {
-    writeCrawl();
-  });
-}
+
 document.getElementById("submitCrawlCode").addEventListener("click", () => {
   let input = document.getElementById("codeInput").value;
   getCrawl(input);
