@@ -45,7 +45,6 @@ const setCheckedState = (target) => {
 const getYelp = async (name, city, state, street) => {
   state = state.toLowerCase();
   let stateAbbreviated = stateArray[state];
-
   try {
     const res = await axios.get(`${corsAnywhere}${yelpRoot}/matches`, {
       params: {
@@ -74,7 +73,11 @@ const getYelp = async (name, city, state, street) => {
     );
     activeYelpRequest = detailRes.data;
     console.log("Yelp query returns", activeYelpRequest);
-  } catch (error) {}
+  } catch (error) {
+
+    M.toast({ html: "I'm sorry, this brewery cannot be found in Yelp." });
+
+  }
 };
 
 const returnCrawl = async (data) => {
@@ -106,6 +109,7 @@ const insertData = (data) => {
       titleSpan.textContent = data[i].name;
       titleSpan.classList.add("title");
       titleSpan.classList.add("brewery");
+      titleSpan.setAttribute("id", data[i].id);
       var image = document.createElement("img");
       image.src = imageSourceForNow;
       image.classList.add("circle");
@@ -113,6 +117,8 @@ const insertData = (data) => {
       let cityState = document.createElement("p");
       address.classList.add("shorten");
       cityState.classList.add("shorten");
+      address.setAttribute("id", data[i].id);
+      cityState.setAttribute("id", data[i].id);
       cityState.textContent = `${data[i].city}, ${data[i].state}`;
       li.classList.add("address");
       li.setAttribute("id", data[i].id);
@@ -217,6 +223,7 @@ function setMarkers(geocoder, map) {
 } 
     }
   }
+  initMap(data);
 };
 
 const redirectAndLoad = () => {

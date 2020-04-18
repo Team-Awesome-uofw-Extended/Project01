@@ -23,55 +23,47 @@ $("#crawl-submit").click(function () {
 });
 
 function writeCrawl() {
-<<<<<<< HEAD
   console.log("running write crawl");
   firebase.database().ref(`crawl-code/${crawlCode}`).set({
     stops: passingCrawl,
   });
-=======
+
   firebase
     .database()
     .ref("crawl-code/" + crawlCode)
     .set({
       stops: passingCrawl,
     });
->>>>>>> e5dbf4be8e21e0d97d64e46d4b65ced887c84660
 }
 
-let displayArray = [];
-const getById = async (id) => {
-  try {
-    {
-      const res = await axios.get(
-        `https://api.openbrewerydb.org/breweries/${id}`
-      );
-      returnedCrawlData.push(res.data);
-    }
-    insertData(returnedCrawlData);
-  } catch (error) {}
-};
 
-if (window.location.pathname === "/confirmation.html") {
-  window.onload = () => {
-    let crawlCode = JSON.parse(window.localStorage.getItem("crawlCode"));
-    let crawlData = JSON.parse(window.localStorage.getItem("crawlArray"));
-    for (var i = 0; i < crawlData.length; i++) {
-      getById(crawlData[i]);
-    }
-
-    $("#confirmation-code").append(crawlCode);
+  let displayArray = [];
+  const getById = async (id) => {
+    try {
+      {
+        const res = await axios.get(
+          `https://api.openbrewerydb.org/breweries/${id}`
+        );
+        returnedCrawlData.push(res.data);
+      }
+      insertData(returnedCrawlData);
+    } catch (error) {}
   };
-}
-<<<<<<< HEAD
-if (window.location.pathname === "/confirmation.html") {
-  document.getElementById("SubmitCrawl").addEventListener("click", () => {
-    writeCrawl();
+
+  if (window.location.pathname === "/confirmation.html") {
+    window.onload = () => {
+      let crawlCode = JSON.parse(window.localStorage.getItem("crawlCode"));
+      let crawlData = JSON.parse(window.localStorage.getItem("crawlArray"));
+      for (var i = 0; i < crawlData.length; i++) {
+        getById(crawlData[i]);
+      }
+
+      $("#confirmation-code").append(crawlCode);
+    };
+  }
+
+  document.getElementById("submitCrawlCode").addEventListener("click", () => {
+    let input = document.getElementById("codeInput").value;
+    getCrawl(input);
   });
 }
-=======
-
->>>>>>> e5dbf4be8e21e0d97d64e46d4b65ced887c84660
-document.getElementById("submitCrawlCode").addEventListener("click", () => {
-  let input = document.getElementById("codeInput").value;
-  getCrawl(input);
-});
