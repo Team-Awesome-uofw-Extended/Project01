@@ -94,6 +94,7 @@ let displayed = [];
 let dataHolder = [];
 
 const insertData = (data) => {
+  console.log("running insert Data");
   for (var i = 0; i < data.length; i++) {
     if (displayed.indexOf(data[i].id) === -1) {
       displayed.push(data[i].id);

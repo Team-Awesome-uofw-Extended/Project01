@@ -9,13 +9,7 @@
   <link rel="stylesheet" href="./assets/css/style.css" />
   <link rel="stylesheet" href="./node_modules/materialize-css/dist/css/materialize.css" />
   <title>Document</title>
-  <style>
-    /* Set the size of the div element that contains the map */
-   #map {
-     height: 350px;  /* The height is 400 pixels */
-     width: 450px;  /* The width is the width of the web page */
-    }
- </style>
+  <!--  -->
 </head>
 
 <body>
@@ -87,26 +81,27 @@
   </div>
 
   <div class="container" style="margin-bottom: 50px;"></div>
-    <div class=" row map col s4 center-align" id="map"></div>
-  
+  <div class=" row map col s4 center-align" id="map"></div>
 
-    <div class="results row">
-      <ul class="collection" id="brewList">
 
-    </div>
-    <ul class="pagination center">
-      <li class="waves-effect"><a href="#!"><i class="material-icons" onclick="paginateDown()">chevron_left</i></a></li>
+  <div class="results row">
+    <ul class="collection" id="brewList">
 
-      <li class="waves-effect"><a href="#!"><i class="material-icons" onclick="paginateUp()">chevron_right</i></a></li>
-    </ul>
-    <a href="#!" class="waves-effect orange lighten-1 btn right crawl-submit"
-      style="margin-bottom: 30px; margin-top: 20px;">Submit</a>
+  </div>
+  <ul class="pagination center">
+    <li class="waves-effect"><a href="#!"><i class="material-icons" onclick="paginateDown()">chevron_left</i></a></li>
+
+    <li class="waves-effect"><a href="#!"><i class="material-icons" onclick="paginateUp()">chevron_right</i></a></li>
+  </ul>
+  <a href="#!" class="waves-effect orange lighten-1 btn right crawl-submit"
+    style="margin-bottom: 30px; margin-top: 20px;">Submit</a>
   </div>
   <script src="./node_modules/materialize-css/dist/js/materialize.js"></script>
   <script>
-M.AutoInit();
+    M.AutoInit();
   </script>
-  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
   <script src="./node_modules/uuidv4/build/lib/uuidv4.js"></script>
   <script src="./node_modules/axios/dist/axios.js"></script>
 
@@ -117,7 +112,7 @@ M.AutoInit();
   <script src="./assets/js/firebase.js"></script>
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqi3hooJuDl13TM-9Wz9WadChisSytWCA&callback=initMap">
-    </script>
+  </script>
 </body>
 
 </html>
