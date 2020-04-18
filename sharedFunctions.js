@@ -20,6 +20,8 @@ if (
   ul = document.getElementById("brewList");
 } else if (window.location.pathname === "/confirmation.html") {
   ul = document.getElementById("brewConfirmation");
+} else if (window.location.pathname === "/crawlcode.html") {
+  ul = document.getElementById("CrawlCodeList");
 }
 const setCheckedState = (target) => {
   if (window.localStorage.crawlArray) {
@@ -72,13 +74,15 @@ const getYelp = async (name, city, state, street) => {
 
 const returnCrawl = async (data) => {
   try {
+    breweriesArray = [];
     for (var i = 0; i < data.length; i++) {
       const res = await axios.get(
         `https://api.openbrewerydb.org/breweries/${data[i]}`
       );
       breweriesArray.push(res.data);
-      console.log("returned from crawl code =>", breweriesArray);
     }
+
+    insertData(breweriesArray);
   } catch (error) {}
 };
 let displayed = [];
@@ -125,8 +129,7 @@ const insertData = (data) => {
       checkBox.addEventListener("click", (e) => {
         setCheckedState(e.target.value);
       });
-      console.log("window" + window.location.pathname);
-      console.log("window" + window.location.href);
+
       checkBox.setAttribute("type", "checkbox");
       let emptySpan = document.createElement("span");
       checkBoxLabel.appendChild(checkBox);
@@ -136,9 +139,14 @@ const insertData = (data) => {
       li.appendChild(titleSpan);
       li.appendChild(address);
       li.appendChild(cityState);
-      if (window.location.href.indexOf("index") > -1) {
+      // if (window.location.href.indexOf("index") > -1) {
+      //   li.appendChild(checkBoxContainer);
+      // }
+      if (
+        window.location.pathname === "/" ||
+        window.location.pathname === "/index.html"
+      ) {
         li.appendChild(checkBoxContainer);
-        console.log("it works?");
       }
       li.addEventListener("click", (e) => {
         let buisID = parseInt(e.target.id);
@@ -151,6 +159,19 @@ const insertData = (data) => {
   }
 };
 
+const redirectAndLoad = () => {
+  if (!window.localStorage.stops) {
+    window.location.pathname = "/index.html";
+  }
+  const stops = JSON.parse(window.localStorage.getItem("stops"));
+
+  returnCrawl(stops);
+};
+
+if (window.location.pathname === "/crawlcode.html") {
+  redirectAndLoad();
+}
+
 const getCrawl = (crawlCode) => {
   return firebase
     .database()
@@ -158,8 +179,11 @@ const getCrawl = (crawlCode) => {
     .once("value")
     .then((snapshot) => {
       let crawlReturn = snapshot.val().stops;
-
-      returnCrawl(crawlReturn);
+      window.localStorage.setItem("stops", JSON.stringify(crawlReturn));
+      window.location.pathname = "/crawlcode.html";
+    })
+    .catch((err) => {
+      M.toast({ html: "I'm sorry, that is not a valid crawl code" });
     });
 };
 const clearCurrentList = () => {
@@ -200,3 +224,10 @@ if (
     paginateDown();
   });
 }
+
+document.getElementById("homeLink").addEventListener("click", () => {
+  window.localStorage.removeItem("stops");
+  window.localStorage.removeItem("crawlArray");
+  window.localStorage.removeItem("crawlCode");
+  window.location.pathname = "/index.html";
+});
