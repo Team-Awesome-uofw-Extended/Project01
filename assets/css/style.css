@@ -24,3 +24,11 @@
 nav {
   margin-bottom: 20px;
 }
+
+.btn, .btn-large, .btn-small {
+  font-size: 1.25rem;
+}
+
+nav ul a {
+  font-size: 1.25rem;
+}
