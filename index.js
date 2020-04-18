@@ -138,7 +138,7 @@ window.onload = () => {
       ul.removeChild(ul.lastElementChild);
     } while (ul.children.length > 0);
   };
-  
+
   const byCity = async (city) => {
     try {
       let byCityRef = `${rootDir}/breweries?by_city=${city}${perPage}`;
@@ -202,3 +202,11 @@ window.onload = () => {
     });
   }
 };
+
+
+//modal trigger for confirmation page
+$(window).on('load',function(){
+  if (window.location.href.indexOf("confirmation") > -1){
+    $('#crawl-confirmation').modal('open')
+}
+});

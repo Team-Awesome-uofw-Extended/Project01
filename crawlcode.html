@@ -4,82 +4,104 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <link rel="stylesheet" href="./assets/css/reset.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <link rel="stylesheet" href="./assets/css/style.css" />
-  <link rel="stylesheet" href="./node_modules/materialize-css/dist/css/materialize.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-  <title>Document</title>
+  <title>Find a Crawl</title>
+
 </head>
 
 <body>
   <nav>
     <div class="nav-wrapper row  orange lighten-1">
       <div class="container">
-        <a href="#!" id="logo-container" class="brand-logo"><img src="./assets/images/beer.png" alt="" height="40px"
+        <a href="./index.html" id="logo-container" class="brand-logo"><img src="./assets/images/beer.png" alt="" height="40px"
             srcset=""></a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
-          <li><a href="./index.html">Create a Crawl</a></li>
+          <li><a href="#">Create a Crawl</a></li>
+          
           <li><a class="modal-trigger" data-target="crawl-modal" href="./crawlcode.html">Crawl Code?</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  
   <ul class="sidenav" id="mobile-demo">
     <li><a href="./index.html">Create a Crawl</a></li>
-    <li><a class="modal-trigger" data-target="locationModal">Change Location</a></li>
-    <li><a href="./crawlcode.html">Crawl Code?</a></li>
+    <li><a href="#!" class="modal-trigger" data-target="crawl-modal">Crawl Code?</a></li>
   </ul>
-  <div id="crawl-modal" class="modal">
-    <div class="modal-content">
-      <h4>Enter your crawl code:</h4>
-      <p>
-        <form action="">
-          <input type="text" name="crawl-code" id="codeInput">
-        </form>
-      </p>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" id="submitCrawlCode" class="modal-close waves-effect orange lighten-1 btn">Submit</a>
-    </div>
-  </div>
-    
-    <div class="container" style="margin-bottom: 50px;">
-      <div class=" row map col s4 center-align">
-        <img src="./assets/images/map placeholder.png" alt="" class="map-placeholder ">
-      </div>
-      
 
-      <div class="results row ">
+  <div class="container">
+
+
+    <div id="crawl-modal" class="modal">
+      <div class="modal-content">
+        <h4>Enter your crawl code:</h4>
+        <p>
+          <form action="">
+            <input type="text" name="crawl-code" id="codeInput">
+          </form>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" id="submitCrawlCode" class="modal-close waves-effect orange lighten-1 btn">Submit</a>
+      </div>
+    </div>
+
+  
+    <div class=" row map col s4 center-align" id="map"></div>
+    <script>
+      var map;
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {
+            lat: 43.073,
+            lng: -89.401
+          },
+          zoom: 8
+        });
+      }
+    </script>
+    <div class="container" style="margin-bottom: 50px;">
+    <div class="results row ">
+
       <ul class="collection" id="brewList">
 
     </div>
     <ul class="pagination center">
-      <li class="waves-effect"><a href="#!"><i class="material-icons" onclick="paginateDown()">chevron_left</i></a></li>
+      <li class="waves-effect"><a href="#!"><i class="material-icons" id="paginateDown">chevron_left</i></a></li>
 
-      <li class="waves-effect"><a href="#!"><i class="material-icons" onclick="paginateUp()">chevron_right</i></a></li>
+      <li class="waves-effect"><a href="#!"><i class="material-icons" id="paginateUp">chevron_right</i></a></li>
     </ul>
-    <a href="#!" class="waves-effect orange lighten-1 btn right crawl-submit"
-      style="margin-bottom: 30px; margin-top: 20px;">Submit</a>
+
+    </div>
   </div>
 
 
-  <!-- <script src="./materialize/dist/js/materialize.js"></script> -->
-  <!-- <script src="./index.js"></script> -->
- 
-  <!-- <script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
     M.AutoInit();
-  </script> -->
+  </script>
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"></script>
 
   <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
- <script src="./bundle.js"></script>
 
-
+  <script src="./sharedFunctions.js"></script>
+  <script src="./stateArray.js"></script>
+  <script src="./index.js"></script>
+  <script src="./assets/js/firebase.js"></script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBqi3hooJuDl13TM-9Wz9WadChisSytWCA&callback=initMap">
+  </script>
 </body>
 
 </html>
