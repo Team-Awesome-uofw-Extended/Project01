@@ -23,12 +23,19 @@ $("#crawl-submit").click(function () {
 });
 
 function writeCrawl() {
+<<<<<<< HEAD
+  console.log("running write crawl");
+  firebase.database().ref(`crawl-code/${crawlCode}`).set({
+    stops: passingCrawl,
+  });
+=======
   firebase
     .database()
     .ref("crawl-code/" + crawlCode)
     .set({
       stops: passingCrawl,
     });
+>>>>>>> e5dbf4be8e21e0d97d64e46d4b65ced887c84660
 }
 
 let displayArray = [];
@@ -55,7 +62,15 @@ if (window.location.pathname === "/confirmation.html") {
     $("#confirmation-code").append(crawlCode);
   };
 }
+<<<<<<< HEAD
+if (window.location.pathname === "/confirmation.html") {
+  document.getElementById("SubmitCrawl").addEventListener("click", () => {
+    writeCrawl();
+  });
+}
+=======
 
+>>>>>>> e5dbf4be8e21e0d97d64e46d4b65ced887c84660
 document.getElementById("submitCrawlCode").addEventListener("click", () => {
   let input = document.getElementById("codeInput").value;
   getCrawl(input);

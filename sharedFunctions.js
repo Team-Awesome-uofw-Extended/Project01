@@ -61,6 +61,7 @@ const getYelp = async (name, city, state, street) => {
     activeYelpRequest = res.data.businesses[0];
 
     let queryDetailID = res.data.businesses[0].id;
+
     const detailRes = await axios.get(
       `${corsAnywhere}${yelpRoot}/${queryDetailID}`,
       {
@@ -83,9 +84,10 @@ const returnCrawl = async (data) => {
       );
       breweriesArray.push(res.data);
     }
-
     insertData(breweriesArray);
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 };
 let displayed = [];
 let dataHolder = [];
@@ -198,12 +200,15 @@ const clearCurrentList = () => {
 
 const paginateUp = async () => {
   pageOffset = pageOffset + 1;
-
   try {
-    const res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
+    let res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
     clearCurrentList();
     insertData(res.data);
-  } catch (error) {}
+  } catch (error) {
+    pageOffset = 1;
+    let res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
+    insertData(res.data);
+  }
 };
 const paginateDown = async () => {
   pageOffset = pageOffset - 1;

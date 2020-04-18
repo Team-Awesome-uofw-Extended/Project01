@@ -1,19 +1,5 @@
 const IdontCareItsFree = "DVuBz9NPzOaxkWYpA8tGNG4ZhrKokozQ";
 const getCityDir = "http://open.mapquestapi.com/geocoding/v1/reverse";
-// const rootDir = "https://api.openbrewerydb.org";
-// const perPage = "&per_page=5";
-// const yelpApiKey =
-//   "IuAyGOEnsbAVEOfh772yr4h5WbKH7nwCmBINkNoHvhY8urogfGa0KFA79Pb8_eiThKsvKyKmIP3k_dATh2CO9KpXLT8D4QWRSsQy91N1weylIVAUHMYAFuGL_6OTXnYx";
-// const rootDir = "https://api.openbrewerydb.org";
-// // Yes, I know this is kindof cheating
-// const corsAnywhere = "https://cors-anywhere.herokuapp.com/";
-// const byTypeFilter =
-//   "&by_type=micro&by_type=bar&by_type=brewpub&by_type=large&by_type=proprieter&by_type=regional";
-// const yelpRoot = "https://api.yelp.com/v3/businesses";
-// const perPage = "&per_page=5";
-// let pageOffset = 1;
-
-// const imageSourceForNow = "./assets/images/beer.png";
 
 const listItem = document.getElementsByClassName("collection-item");
 const locationButton = document.getElementById("changeLocationButton");
@@ -23,8 +9,6 @@ const cityInput = document.getElementById("cityChange");
 let currentCrawl = [];
 let activeYelpRequest = {};
 let lastGetRequest = "";
-// let location = window.location.pathname;
-// console.log("location", location);
 
 window.onload = () => {
   const setDefaultLocation = (city) => {
