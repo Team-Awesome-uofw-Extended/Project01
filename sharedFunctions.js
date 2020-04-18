@@ -4,6 +4,7 @@ const yelpApiKey =
   "IuAyGOEnsbAVEOfh772yr4h5WbKH7nwCmBINkNoHvhY8urogfGa0KFA79Pb8_eiThKsvKyKmIP3k_dATh2CO9KpXLT8D4QWRSsQy91N1weylIVAUHMYAFuGL_6OTXnYx";
 const rootDir = "https://api.openbrewerydb.org";
 const perPage = "&per_page=5";
+const hostedRoot = "https://team-awesome-uofw-extended.github.io/Project01/";
 // Yes, I know this is kindof cheating
 const corsAnywhere = "https://cors-anywhere.herokuapp.com/";
 const byTypeFilter =
@@ -164,7 +165,6 @@ const redirectAndLoad = () => {
     window.location.pathname = "/index.html";
   }
   const stops = JSON.parse(window.localStorage.getItem("stops"));
-
   returnCrawl(stops);
 };
 
@@ -181,6 +181,8 @@ const getCrawl = (crawlCode) => {
       let crawlReturn = snapshot.val().stops;
       window.localStorage.setItem("stops", JSON.stringify(crawlReturn));
       window.location.pathname = "/crawlcode.html";
+      // !! Uncomment this and delete the one above when hosted on github pages
+      // window.location.href = `${hostedRoot}crawlcode.html`;
     })
     .catch((err) => {
       M.toast({ html: "I'm sorry, that is not a valid crawl code" });

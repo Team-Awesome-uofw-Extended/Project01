@@ -50,7 +50,6 @@ window.onload = () => {
 
   console.log("running by location");
   console.log(window.location.pathname);
-
   if (
     window.location.pathname === "/" ||
     window.location.pathname === "/index.html"
@@ -66,72 +65,6 @@ window.onload = () => {
     console.log(navigator.geolocation.getCurrentPosition);
     navigator.geolocation.getCurrentPosition(success, error);
   }
-
-  // const paginateUp = async () => {
-  //   pageOffset = pageOffset + 1;
-  //   try {
-  //     const res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
-  //     clearCurrentList();
-
-  //     insertData(res.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-  // const paginateDown = async () => {
-  //   pageOffset = pageOffset - 1;
-  //   try {
-  //     const res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
-  //     clearCurrentList();
-  //     insertData(res.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // document.getElementById("paginateUp").addEventListener("click", () => {
-  //   paginateUp();
-  // });
-  // document.getElementById("paginateDown").addEventListener("click", () => {
-  //   paginateDown();
-  // });
-
-  // Need to change this to filter an array of states for two letter abbreviations to allow other states
-  // const getYelp = async (name, city, state, street) => {
-  //   state = state.toLowerCase();
-  //   let stateAbbreviated = stateArray[state];
-
-  //   try {
-  //     const res = await axios.get(`${corsAnywhere}${yelpRoot}/matches`, {
-  //       params: {
-  //         name: name,
-  //         address1: street,
-  //         city: city,
-  //         state: stateAbbreviated,
-  //         country: "US",
-  //       },
-  //       headers: {
-  //         Authorization: `Bearer ${yelpApiKey}`,
-  //       },
-  //     });
-
-  //     activeYelpRequest = res.data.businesses[0];
-
-  //     let queryDetailID = res.data.businesses[0].id;
-  //     const detailRes = await axios.get(
-  //       `${corsAnywhere}${yelpRoot}/${queryDetailID}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${yelpApiKey}`,
-  //         },
-  //       }
-  //     );
-  //     activeYelpRequest = detailRes.data;
-  //     console.log("Rob... make this look pretty", activeYelpRequest);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   const clearCurrentList = () => {
     do {
@@ -192,7 +125,6 @@ window.onload = () => {
   ) {
     locationButton.addEventListener("click", (e) => {
       console.log("running change location");
-
       e.preventDefault();
       newCity = cityInput.value;
       newState = stateInput.value;
