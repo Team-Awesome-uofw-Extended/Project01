@@ -52,67 +52,54 @@ var breweries = [{
     }];
     //This function gets the address from the breweries objects and geocodes them
     const getAddress = address => {
-        return new Promise((resolve, reject) => {
-            const geocoder = new google.maps.Geocoder();
-            geocoder.geocode({address: address}, (results, status) => {
-                if (status === 'OK') {
-                    resolve(results[0].geometry.location);
-                } else {
-                    reject(status);
-                }    
-            });    
-        });
-    };
-    //This acts as a callback function to get the info from the breweries objects after the the pins are created
-    function makeCallback(brewInfo,map) {
-        var geocodeCallBack = function(results, status) {
-            var contentString = '<div>' + brewInfo.name + '</div>';
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString
-              }); 
-            console.log(map)
-              var marker = new google.maps.Marker({
-                position: results[0].geometry.location,
-                map: map
-              });
-              //console.log(results[0])
-              marker.addListener('click', function() {
-                infowindow.open(map, marker);
-              });
-              map.panTo(marker.position);
-        }
-        return geocodeCallBack;
-    }
-    //Creates map
+      return new Promise((resolve, reject) => {
+          const geocoder = new google.maps.Geocoder();
+          geocoder.geocode({address: address}, (results, status) => {
+              if (status === 'OK') {
+                  resolve(results[0].geometry.location);
+              } else {
+                  reject(status);
+              }    
+          });    
+      });
+  };
+  //This acts as a callback function to get the info from the breweries objects after the the pins are created
+  function makeCallback(brewInfo,map) {
+      var geocodeCallBack = function(results, status) {
+        var contentString = '<div>' + brewInfo.name + '<br>' + 
+        brewInfo.street +', '+ brewInfo.city +', '+ brewInfo.state + '<br>' + 
+        brewInfo.phone + '<br>' +
+        '<a href='+ brewInfo.website_url +'>' + brewInfo.website_url + '</a>' + '</div>';
+          var infowindow = new google.maps.InfoWindow({
+              content: contentString
+            }); 
+          console.log(map)
+            var marker = new google.maps.Marker({
+              position: results[0].geometry.location,
+              map: map
+            });
+            console.log(results[0])
+            marker.addListener('click', function() {
+              infowindow.open(map, marker);
+            });
+            map.panTo(marker.position);
+      }
+      return geocodeCallBack;
+  }
+  //Creates map
 function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 11,
-      center: {lat: -34.397, lng: 150.644}
-    });
-    geocoder = new google.maps.Geocoder();
-    setMarkers(geocoder, map);
-  }
-  // This function sets the markers on the map, and calls the callback to populate the info windows correctly.
-  function setMarkers(geocoder, map) {
-    for (i =0; i < breweries.length; i++){
-        var brewInfo = breweries[i]
-        //console.log(brewInfo)
-        geocoder.geocode( {'address': breweries[i].street + ', ' + breweries[i].city + ', ' + breweries[i].state}, makeCallback(brewInfo,map));
-        
-    } 
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 15,
+    center: {lat: -34.397, lng: 150.644}
+  });
+  geocoder = new google.maps.Geocoder();
+  setMarkers(geocoder, map);
 }
-function listBreweries() {
-  var div = $("#brewList");
-
-  div.empty();
-  for (i in breweries){
-    var fields = ["name","brewery_type","street","city","phone","website_url"]
-    for (v in fields){
-      var span = $("<span>")
-      console.log(breweries[i])
-      span.text(hi)
-      div.append(span, $("<br>"));
-    }
-  }
+// This function sets the markers on the map, and calls the callback to populate the info windows correctly.
+function setMarkers(geocoder, map) {
+  for (i =0; i < breweries.length; i++){
+      var brewInfo = breweries[i]
+      console.log(brewInfo)
+      geocoder.geocode( {'address': breweries[i].street + ', ' + breweries[i].city + ', ' + breweries[i].state}, makeCallback(brewInfo,map));
+  } 
 }
-listBreweries()
