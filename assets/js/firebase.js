@@ -23,19 +23,16 @@ $("#crawl-submit").click(function () {
 });
 
 function writeCrawl() {
-<<<<<<< HEAD
   console.log("running write crawl");
   firebase.database().ref(`crawl-code/${crawlCode}`).set({
     stops: passingCrawl,
   });
-=======
   firebase
     .database()
     .ref("crawl-code/" + crawlCode)
     .set({
       stops: passingCrawl,
     });
->>>>>>> e5dbf4be8e21e0d97d64e46d4b65ced887c84660
 }
 
 let displayArray = [];
