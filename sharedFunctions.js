@@ -1,4 +1,6 @@
 const imageSourceForNow = "./assets/images/beer.png";
+var geocoder;
+var map;
 
 const yelpApiKey =
   "IuAyGOEnsbAVEOfh772yr4h5WbKH7nwCmBINkNoHvhY8urogfGa0KFA79Pb8_eiThKsvKyKmIP3k_dATh2CO9KpXLT8D4QWRSsQy91N1weylIVAUHMYAFuGL_6OTXnYx";
@@ -74,7 +76,7 @@ const returnCrawl = async (data) => {
   try {
     for (var i = 0; i < data.length; i++) {
       const res = await axios.get(
-        `https://api.openbrewerydb.org/breweries/${data[i]}`
+        `https://api.openbrewerydb.org/breweriesArray/${data[i]}`
       );
       breweriesArray.push(res.data);
       console.log("returned from crawl code =>", breweriesArray);
@@ -143,6 +145,60 @@ const insertData = (data) => {
         getYelp(selected.name, selected.city, selected.state, selected.street);
       });
       ul.appendChild(li);
+
+       //This function gets the address from the breweriesArray objects and geocodes them
+    const getAddress = address => {
+      return new Promise((resolve, reject) => {
+          const geocoder = new google.maps.Geocoder();
+          geocoder.geocode({address: address}, (results, status) => {
+              if (status === 'OK') {
+                  resolve(results[0].geometry.location);
+              } else {
+                  reject(status);
+              }    
+          });    
+      });
+  };
+  //This acts as a callback function to get the info from the breweriesArray objects after the the pins are created
+  function makeCallback(brewInfo,map) {
+      var geocodeCallBack = function(results, status) {
+        var contentString = '<div>' + brewInfo.name + '<br>' + 
+        brewInfo.street +', '+ brewInfo.city +', '+ brewInfo.state + '<br>' + 
+        brewInfo.phone + '<br>' +
+        '<a href='+ brewInfo.website_url +'>' + brewInfo.website_url + '</a>' + '</div>';
+          var infowindow = new google.maps.InfoWindow({
+              content: contentString
+            }); 
+          console.log(map)
+            var marker = new google.maps.Marker({
+              position: results[0].geometry.location,
+              map: map
+            });
+            console.log(results[0])
+            marker.addListener('click', function() {
+              infowindow.open(map, marker);
+            });
+            map.panTo(marker.position);
+      }
+      return geocodeCallBack;
+  }
+  //Creates map
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 15,
+    center: {lat: -34.397, lng: 150.644}
+  });
+  geocoder = new google.maps.Geocoder();
+  setMarkers(geocoder, map);
+}
+// This function sets the markers on the map, and calls the callback to populate the info windows correctly.
+function setMarkers(geocoder, map) {
+  for (i =0; i < breweriesArray.length; i++){
+      var brewInfo = breweriesArray[i]
+      console.log(brewInfo)
+      geocoder.geocode( {'address': breweriesArray[i].street + ', ' + breweriesArray[i].city + ', ' + breweriesArray[i].state}, makeCallback(brewInfo,map));
+  } 
+}
     }
   }
 };
