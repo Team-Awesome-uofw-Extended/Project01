@@ -43,7 +43,6 @@ const setCheckedState = (target) => {
 const getYelp = async (name, city, state, street) => {
   state = state.toLowerCase();
   let stateAbbreviated = stateArray[state];
-
   try {
     const res = await axios.get(`${corsAnywhere}${yelpRoot}/matches`, {
       params: {
@@ -72,7 +71,9 @@ const getYelp = async (name, city, state, street) => {
     );
     activeYelpRequest = detailRes.data;
     console.log("Yelp query returns", activeYelpRequest);
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const returnCrawl = async (data) => {
@@ -161,6 +162,7 @@ const insertData = (data) => {
       ul.appendChild(li);
     }
   }
+  initMap(data);
 };
 
 const redirectAndLoad = () => {
