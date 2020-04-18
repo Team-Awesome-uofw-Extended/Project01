@@ -72,9 +72,7 @@ const getYelp = async (name, city, state, street) => {
     activeYelpRequest = detailRes.data;
     console.log("Yelp query returns", activeYelpRequest);
   } catch (error) {
-
     M.toast({ html: "I'm sorry, this brewery cannot be found in Yelp." });
-
   }
 };
 
@@ -83,7 +81,7 @@ const returnCrawl = async (data) => {
     breweriesArray = [];
     for (var i = 0; i < data.length; i++) {
       const res = await axios.get(
-        `https://api.openbrewerydb.org/breweries/${data[i]}`
+        `https://api.openbrewerydb.org/breweriesArray/${data[i]}`
       );
       breweriesArray.push(res.data);
     }

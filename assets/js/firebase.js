@@ -36,34 +36,32 @@ function writeCrawl() {
     });
 }
 
+let displayArray = [];
+const getById = async (id) => {
+  try {
+    {
+      const res = await axios.get(
+        `https://api.openbrewerydb.org/breweries/${id}`
+      );
+      returnedCrawlData.push(res.data);
+    }
+    insertData(returnedCrawlData);
+  } catch (error) {}
+};
 
-  let displayArray = [];
-  const getById = async (id) => {
-    try {
-      {
-        const res = await axios.get(
-          `https://api.openbrewerydb.org/breweries/${id}`
-        );
-        returnedCrawlData.push(res.data);
-      }
-      insertData(returnedCrawlData);
-    } catch (error) {}
+if (window.location.pathname === "/confirmation.html") {
+  window.onload = () => {
+    let crawlCode = JSON.parse(window.localStorage.getItem("crawlCode"));
+    let crawlData = JSON.parse(window.localStorage.getItem("crawlArray"));
+    for (var i = 0; i < crawlData.length; i++) {
+      getById(crawlData[i]);
+    }
+
+    $("#confirmation-code").append(crawlCode);
   };
-
-  if (window.location.pathname === "/confirmation.html") {
-    window.onload = () => {
-      let crawlCode = JSON.parse(window.localStorage.getItem("crawlCode"));
-      let crawlData = JSON.parse(window.localStorage.getItem("crawlArray"));
-      for (var i = 0; i < crawlData.length; i++) {
-        getById(crawlData[i]);
-      }
-
-      $("#confirmation-code").append(crawlCode);
-    };
-  }
-
-  document.getElementById("submitCrawlCode").addEventListener("click", () => {
-    let input = document.getElementById("codeInput").value;
-    getCrawl(input);
-  });
 }
+
+document.getElementById("submitCrawlCode").addEventListener("click", () => {
+  let input = document.getElementById("codeInput").value;
+  getCrawl(input);
+});
