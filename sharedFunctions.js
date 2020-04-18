@@ -70,6 +70,7 @@ const getYelp = async (name, city, state, street) => {
       }
     );
     activeYelpRequest = detailRes.data;
+    console.log("Yelp query returns", activeYelpRequest);
   } catch (error) {}
 };
 
