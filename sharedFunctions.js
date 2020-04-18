@@ -88,7 +88,6 @@ const insertData = (data) => {
   for (var i = 0; i < data.length; i++) {
     if (displayed.indexOf(data[i].id) === -1) {
       displayed.push(data[i].id);
-
       dataHolder.push(data[i]);
       let li = document.createElement("li");
       li.classList.add("collection-item");
@@ -126,7 +125,8 @@ const insertData = (data) => {
       checkBox.addEventListener("click", (e) => {
         setCheckedState(e.target.value);
       });
-      console.log('window'+window.location.pathname)
+      console.log("window" + window.location.pathname);
+      console.log("window" + window.location.href);
       checkBox.setAttribute("type", "checkbox");
       let emptySpan = document.createElement("span");
       checkBoxLabel.appendChild(checkBox);
@@ -136,8 +136,9 @@ const insertData = (data) => {
       li.appendChild(titleSpan);
       li.appendChild(address);
       li.appendChild(cityState);
-      if (window.location.href.indexOf("index") > -1){
+      if (window.location.href.indexOf("index") > -1) {
         li.appendChild(checkBoxContainer);
+        console.log("it works?");
       }
       li.addEventListener("click", (e) => {
         let buisID = parseInt(e.target.id);
