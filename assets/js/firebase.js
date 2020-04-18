@@ -23,6 +23,7 @@ $("#crawl-submit").click(function () {
 });
 
 function writeCrawl() {
+  console.log("running write crawl");
   firebase.database().ref(`crawl-code/${crawlCode}`).set({
     stops: passingCrawl,
   });
@@ -53,7 +54,7 @@ if (window.location.pathname === "/confirmation.html") {
   };
 }
 if (window.location.pathname === "/confirmation.html") {
-  document.getElementById("submitCrawlCode").addEventListener("click", () => {
+  document.getElementById("SubmitCrawl").addEventListener("click", () => {
     writeCrawl();
   });
 }

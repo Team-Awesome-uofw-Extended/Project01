@@ -1,19 +1,5 @@
 const IdontCareItsFree = "DVuBz9NPzOaxkWYpA8tGNG4ZhrKokozQ";
 const getCityDir = "http://open.mapquestapi.com/geocoding/v1/reverse";
-// const rootDir = "https://api.openbrewerydb.org";
-// const perPage = "&per_page=5";
-// const yelpApiKey =
-//   "IuAyGOEnsbAVEOfh772yr4h5WbKH7nwCmBINkNoHvhY8urogfGa0KFA79Pb8_eiThKsvKyKmIP3k_dATh2CO9KpXLT8D4QWRSsQy91N1weylIVAUHMYAFuGL_6OTXnYx";
-// const rootDir = "https://api.openbrewerydb.org";
-// // Yes, I know this is kindof cheating
-// const corsAnywhere = "https://cors-anywhere.herokuapp.com/";
-// const byTypeFilter =
-//   "&by_type=micro&by_type=bar&by_type=brewpub&by_type=large&by_type=proprieter&by_type=regional";
-// const yelpRoot = "https://api.yelp.com/v3/businesses";
-// const perPage = "&per_page=5";
-// let pageOffset = 1;
-
-// const imageSourceForNow = "./assets/images/beer.png";
 
 const listItem = document.getElementsByClassName("collection-item");
 const locationButton = document.getElementById("changeLocationButton");
@@ -23,8 +9,6 @@ const cityInput = document.getElementById("cityChange");
 let currentCrawl = [];
 let activeYelpRequest = {};
 let lastGetRequest = "";
-// let location = window.location.pathname;
-// console.log("location", location);
 
 window.onload = () => {
   const setDefaultLocation = (city) => {
@@ -67,78 +51,12 @@ window.onload = () => {
     navigator.geolocation.getCurrentPosition(success, error);
   }
 
-  // const paginateUp = async () => {
-  //   pageOffset = pageOffset + 1;
-  //   try {
-  //     const res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
-  //     clearCurrentList();
-
-  //     insertData(res.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-  // const paginateDown = async () => {
-  //   pageOffset = pageOffset - 1;
-  //   try {
-  //     const res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
-  //     clearCurrentList();
-  //     insertData(res.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // document.getElementById("paginateUp").addEventListener("click", () => {
-  //   paginateUp();
-  // });
-  // document.getElementById("paginateDown").addEventListener("click", () => {
-  //   paginateDown();
-  // });
-
-  // Need to change this to filter an array of states for two letter abbreviations to allow other states
-  // const getYelp = async (name, city, state, street) => {
-  //   state = state.toLowerCase();
-  //   let stateAbbreviated = stateArray[state];
-
-  //   try {
-  //     const res = await axios.get(`${corsAnywhere}${yelpRoot}/matches`, {
-  //       params: {
-  //         name: name,
-  //         address1: street,
-  //         city: city,
-  //         state: stateAbbreviated,
-  //         country: "US",
-  //       },
-  //       headers: {
-  //         Authorization: `Bearer ${yelpApiKey}`,
-  //       },
-  //     });
-
-  //     activeYelpRequest = res.data.businesses[0];
-
-  //     let queryDetailID = res.data.businesses[0].id;
-  //     const detailRes = await axios.get(
-  //       `${corsAnywhere}${yelpRoot}/${queryDetailID}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${yelpApiKey}`,
-  //         },
-  //       }
-  //     );
-  //     activeYelpRequest = detailRes.data;
-  //     console.log("Rob... make this look pretty", activeYelpRequest);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   const clearCurrentList = () => {
     do {
       ul.removeChild(ul.lastElementChild);
     } while (ul.children.length > 0);
   };
-  
+
   const byCity = async (city) => {
     try {
       let byCityRef = `${rootDir}/breweries?by_city=${city}${perPage}`;

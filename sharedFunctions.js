@@ -77,9 +77,11 @@ const returnCrawl = async (data) => {
         `https://api.openbrewerydb.org/breweries/${data[i]}`
       );
       breweriesArray.push(res.data);
-      console.log("returned from crawl code =>", breweriesArray);
     }
-  } catch (error) {}
+    console.log("returned from crawl code =>", breweriesArray);
+  } catch (error) {
+    console.error(error);
+  }
 };
 let displayed = [];
 let dataHolder = [];
