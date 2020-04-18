@@ -34,10 +34,9 @@ function initMap(data) {
   }
 
   for (var i = 0; i < data.length; i++) {
-    // request.query.push(data[i].name);
-    console.log(data[i]);
+    let addressInput = data[i].street + ", " + data[i].city;
     const request = {
-      query: data[i].street,
+      query: addressInput,
       fields: ["formatted_address", "name", "geometry"],
     };
     setMap(request, data[i]);
