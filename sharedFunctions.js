@@ -6,6 +6,7 @@ const yelpApiKey =
   "IuAyGOEnsbAVEOfh772yr4h5WbKH7nwCmBINkNoHvhY8urogfGa0KFA79Pb8_eiThKsvKyKmIP3k_dATh2CO9KpXLT8D4QWRSsQy91N1weylIVAUHMYAFuGL_6OTXnYx";
 const rootDir = "https://api.openbrewerydb.org";
 const perPage = "&per_page=5";
+const hostedRoot = "https://team-awesome-uofw-extended.github.io/Project01/";
 // Yes, I know this is kindof cheating
 const corsAnywhere = "https://cors-anywhere.herokuapp.com/";
 const byTypeFilter =
@@ -22,6 +23,8 @@ if (
   ul = document.getElementById("brewList");
 } else if (window.location.pathname === "/confirmation.html") {
   ul = document.getElementById("brewConfirmation");
+} else if (window.location.pathname === "/crawlcode.html") {
+  ul = document.getElementById("CrawlCodeList");
 }
 const setCheckedState = (target) => {
   if (window.localStorage.crawlArray) {
@@ -60,6 +63,7 @@ const getYelp = async (name, city, state, street) => {
     activeYelpRequest = res.data.businesses[0];
 
     let queryDetailID = res.data.businesses[0].id;
+
     const detailRes = await axios.get(
       `${corsAnywhere}${yelpRoot}/${queryDetailID}`,
       {
@@ -69,19 +73,23 @@ const getYelp = async (name, city, state, street) => {
       }
     );
     activeYelpRequest = detailRes.data;
+    console.log("Yelp query returns", activeYelpRequest);
   } catch (error) {}
 };
 
 const returnCrawl = async (data) => {
   try {
+    breweriesArray = [];
     for (var i = 0; i < data.length; i++) {
       const res = await axios.get(
         `https://api.openbrewerydb.org/breweriesArray/${data[i]}`
       );
       breweriesArray.push(res.data);
-      console.log("returned from crawl code =>", breweriesArray);
     }
-  } catch (error) {}
+    insertData(breweriesArray);
+  } catch (error) {
+    console.error(error);
+  }
 };
 let displayed = [];
 let dataHolder = [];
@@ -90,7 +98,6 @@ const insertData = (data) => {
   for (var i = 0; i < data.length; i++) {
     if (displayed.indexOf(data[i].id) === -1) {
       displayed.push(data[i].id);
-
       dataHolder.push(data[i]);
       let li = document.createElement("li");
       li.classList.add("collection-item");
@@ -128,6 +135,7 @@ const insertData = (data) => {
       checkBox.addEventListener("click", (e) => {
         setCheckedState(e.target.value);
       });
+
       checkBox.setAttribute("type", "checkbox");
       let emptySpan = document.createElement("span");
       checkBoxLabel.appendChild(checkBox);
@@ -137,7 +145,15 @@ const insertData = (data) => {
       li.appendChild(titleSpan);
       li.appendChild(address);
       li.appendChild(cityState);
-      li.appendChild(checkBoxContainer);
+      // if (window.location.href.indexOf("index") > -1) {
+      //   li.appendChild(checkBoxContainer);
+      // }
+      if (
+        window.location.pathname === "/" ||
+        window.location.pathname === "/index.html"
+      ) {
+        li.appendChild(checkBoxContainer);
+      }
       li.addEventListener("click", (e) => {
         let buisID = parseInt(e.target.id);
         let filtered = dataHolder.filter((buis) => buis.id === buisID);
@@ -203,6 +219,18 @@ function setMarkers(geocoder, map) {
   }
 };
 
+const redirectAndLoad = () => {
+  if (!window.localStorage.stops) {
+    window.location.pathname = "/index.html";
+  }
+  const stops = JSON.parse(window.localStorage.getItem("stops"));
+  returnCrawl(stops);
+};
+
+if (window.location.pathname === "/crawlcode.html") {
+  redirectAndLoad();
+}
+
 const getCrawl = (crawlCode) => {
   return firebase
     .database()
@@ -210,8 +238,13 @@ const getCrawl = (crawlCode) => {
     .once("value")
     .then((snapshot) => {
       let crawlReturn = snapshot.val().stops;
-
-      returnCrawl(crawlReturn);
+      window.localStorage.setItem("stops", JSON.stringify(crawlReturn));
+      window.location.pathname = "/crawlcode.html";
+      // !! Uncomment this and delete the one above when hosted on github pages
+      // window.location.href = `${hostedRoot}crawlcode.html`;
+    })
+    .catch((err) => {
+      M.toast({ html: "I'm sorry, that is not a valid crawl code" });
     });
 };
 const clearCurrentList = () => {
@@ -223,12 +256,15 @@ const clearCurrentList = () => {
 
 const paginateUp = async () => {
   pageOffset = pageOffset + 1;
-
   try {
-    const res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
+    let res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
     clearCurrentList();
     insertData(res.data);
-  } catch (error) {}
+  } catch (error) {
+    pageOffset = 1;
+    let res = await axios.get(`${lastGetRequest}&page=${pageOffset}`);
+    insertData(res.data);
+  }
 };
 const paginateDown = async () => {
   pageOffset = pageOffset - 1;
@@ -252,3 +288,10 @@ if (
     paginateDown();
   });
 }
+
+document.getElementById("homeLink").addEventListener("click", () => {
+  window.localStorage.removeItem("stops");
+  window.localStorage.removeItem("crawlArray");
+  window.localStorage.removeItem("crawlCode");
+  window.location.pathname = "/index.html";
+});
