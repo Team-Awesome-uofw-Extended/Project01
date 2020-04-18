@@ -5,16 +5,8 @@ let infowindow;
 function initMap(data) {
   infowindow = new google.maps.InfoWindow();
   map = new google.maps.Map(document.getElementById("map"), {
-    // center: {
-    //   lat: latitude,
-    //   lng: longitude,
-    // },
-    zoom: 14,
+    zoom: 10,
   });
-  //   let request = {
-  //     query: [],
-  //     fields: ["name", "geometry"],
-  //   };
 
   var service = new google.maps.places.PlacesService(map);
   const setMap = (requestData) => {
