@@ -21,8 +21,8 @@
             srcset=""></a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
-          <li><a href="#">Create a Crawl</a></li>
-          <li><a class="modal-trigger" data-target="locationModal">Change Location</a></li>
+          <li><a href="#" id="homeLink">Create a Crawl</a></li>
+
           <li><a class="modal-trigger" data-target="crawl-modal" href="./crawlcode.html">Crawl Code?</a></li>
         </ul>
       </div>
@@ -30,9 +30,8 @@
   </nav>
 
   <ul class="sidenav" id="mobile-demo">
-    <li><a href="#">Create a Crawl</a></li>
-    <li><a class="modal-trigger" data-target="locationModal">Change Location</a></li>
-    <li><a href="./crawlcode.html">Crawl Code?</a></li>
+    <li><a href="#!">Create a Crawl</a></li>
+    <li><a href="#!" class="modal-trigger" data-target="crawl-modal">Crawl Code?</a></li>
   </ul>
 
   <div class="container">
@@ -48,7 +47,7 @@
         </p>
       </div>
       <div class="modal-footer">
-        <a href="#!" id="submitCrawlCode" class="modal-close waves-effect orange lighten-1 btn">Submit</a>
+        <a id="submitCrawlCode" class="modal-close waves-effect orange lighten-1 btn">Submit</a>
       </div>
     </div>
 
@@ -78,7 +77,6 @@
       </div>
     </div>
 
-
     <div class=" row map col s4 center-align" id="map"></div>
     <script>
       var map;
@@ -93,19 +91,20 @@
         });
       }
     </script>
+    <div class="container" style="margin-bottom: 50px;">
+      <div class="results row ">
+        <a class="modal-trigger btn orange lighten-1" data-target="locationModal">Change Location</a>
+        <ul class="collection" id="brewList">
 
-    <div class="results row ">
-      <ul class="collection" id="brewList">
+      </div>
+      <ul class="pagination center">
+        <li class="waves-effect"><a href="#!"><i class="material-icons" id="paginateDown">chevron_left</i></a></li>
 
+        <li class="waves-effect"><a href="#!"><i class="material-icons" id="paginateUp">chevron_right</i></a></li>
+      </ul>
+      <a href="#!" id="crawl-submit" class="waves-effect orange lighten-1 btn right "
+        style="margin-bottom: 30px; margin-top: 20px;">Submit</a>
     </div>
-    <ul class="pagination center">
-      <li class="waves-effect"><a href="#!"><i class="material-icons" id="paginateDown">chevron_left</i></a></li>
-
-      <li class="waves-effect"><a href="#!"><i class="material-icons" id="paginateUp">chevron_right</i></a></li>
-    </ul>
-    <a href="#!" id="crawl-submit" class="waves-effect orange lighten-1 btn right "
-      style="margin-bottom: 30px; margin-top: 20px;">Submit</a>
-  </div>
   </div>
 
 
