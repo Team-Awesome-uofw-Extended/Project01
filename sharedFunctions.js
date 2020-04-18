@@ -138,7 +138,6 @@ const insertData = (data) => {
       li.appendChild(cityState);
       if (window.location.href.indexOf("index") > -1){
         li.appendChild(checkBoxContainer);
-        console.log("it works?")
       }
       li.addEventListener("click", (e) => {
         let buisID = parseInt(e.target.id);

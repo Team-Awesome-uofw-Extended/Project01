@@ -202,3 +202,11 @@ window.onload = () => {
     });
   }
 };
+
+
+//modal trigger for confirmation page
+$(window).on('load',function(){
+  if (window.location.href.indexOf("confirmation") > -1){
+    $('#crawl-confirmation').modal('open')
+}
+});

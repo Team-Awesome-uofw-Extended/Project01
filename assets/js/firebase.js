@@ -49,7 +49,7 @@ if (window.location.pathname === "/confirmation.html") {
       getById(crawlData[i]);
     }
 
-    document.getElementById("confirmation-code").innerHTML = crawlCode;
+    $("#confirmation-code").append(crawlCode);
   };
 }
 if (window.location.pathname === "/confirmation.html") {
