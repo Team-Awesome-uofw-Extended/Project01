@@ -214,7 +214,7 @@ function setMarkers(geocoder, map) {
       console.log(brewInfo)
       geocoder.geocode( {'address': breweriesArray[i].street + ', ' + breweriesArray[i].city + ', ' + breweriesArray[i].state}, makeCallback(brewInfo,map));
   } 
-}
+} 
     }
   }
 };
@@ -295,3 +295,5 @@ document.getElementById("homeLink").addEventListener("click", () => {
   window.localStorage.removeItem("crawlCode");
   window.location.pathname = "/index.html";
 });
+
+

@@ -31,7 +31,6 @@ window.onload = () => {
     timeout: 5000,
     maximumAge: 0,
   };
-
   console.log("running by location");
   console.log(window.location.pathname);
   if (
@@ -120,8 +119,29 @@ window.onload = () => {
       }
       clearCurrentList();
       cityState(newCity, newState);
-    });
-  }
+      //Move map to new current city
+      function initMap_CL() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 11,
+          center: {lat: 39.8283,lng: -98.5795}
+        });
+        //Does geocoding of new city and state
+        function codeAddress() {
+          var address = newCity + ', ' + newState;
+          geocoder = new google.maps.Geocoder();
+          geocoder.geocode( { 'address': address}, function(results, status) {
+            if (status == 'OK') {
+              map.setCenter(results[0].geometry.location);
+            } else {
+              alert('Geocode was not successful for the following reason: ' + status);
+            }
+          });
+        }
+        codeAddress();
+    };
+    initMap_CL();
+    
+  })
 };
 
 //modal trigger for confirmation page
@@ -130,3 +150,29 @@ $(window).on("load", function () {
     $("#crawl-confirmation").modal("open");
   }
 });
+
+   //This function gets the address from the breweriesArray objects and geocodes them
+   
+/*
+const getAddress = address => {
+        return new Promise((resolve, reject) => {
+            const geocoder = new google.maps.Geocoder();
+            geocoder.geocode({address: address}, (results, status) => {
+                if (status === 'OK') {
+                    resolve(results[0].geometry.location);
+                } else {
+                    reject(status);
+                }    
+            });    
+        });
+    };
+function initMap(latitude, longitude) {
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: {S
+      lat: latitude,
+      lng: longitude,
+    },
+    zoom: 8,
+  });
+} */
+}
