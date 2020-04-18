@@ -28,6 +28,15 @@ function writeCrawl() {
     stops: passingCrawl,
   });
 
+  firebase
+    .database()
+    .ref("crawl-code/" + crawlCode)
+    .set({
+      stops: passingCrawl,
+    });
+}
+
+
   let displayArray = [];
   const getById = async (id) => {
     try {
