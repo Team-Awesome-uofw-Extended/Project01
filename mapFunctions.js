@@ -3,18 +3,16 @@ let service;
 let infowindow;
 
 function initMap(data) {
-  console.log("running initMap as ", data);
   const setMarkers = (place, status) => {
-    console.log("running set markers with ", place);
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       createMarker(place);
     }
   };
 
   const callback = (results, status) => {
-    console.log("running callback with ", results);
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       map.setCenter(results[0].geometry.location);
+      console.log("results returns...", results);
       let request = {
         placeId: results[0].place_id,
         fields: [
@@ -30,8 +28,10 @@ function initMap(data) {
       infowindow = new google.maps.InfoWindow();
       service.getDetails(request, (place, status) => {
         //   !! Need to add a setTimeout function on crawlcode retrieval page so google doesn't throw a fit that we're making requests to rapidly
-        console.log(status);
+        console.log("request returns => ", request);
+
         if (status === google.maps.places.PlacesServiceStatus.OK) {
+          console.log("place returns ", place);
           var marker = new google.maps.Marker({
             map: map,
             position: place.geometry.location,
@@ -56,7 +56,6 @@ function initMap(data) {
             displayRating = `${place.name} has an average rating of ${place.rating}`;
           }
 
-          console.log(displayWebsite);
           let displayInfo = `${displayRating}<br> ${displayPhone}<br>
          ${displayWebsite}`;
           google.maps.event.addListener(marker, "click", function () {
@@ -69,7 +68,7 @@ function initMap(data) {
   };
 
   map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 13,
+    zoom: 11,
   });
 
   var service = new google.maps.places.PlacesService(map);
@@ -79,7 +78,16 @@ function initMap(data) {
   };
 
   for (var i = 0; i < data.length; i++) {
-    let addressInput = data[i].street + ", " + data[i].city + data[i].name;
+    // let stateAbbreviated = stateArray[data[i].state];
+    let addressInput =
+      data[i].name +
+      ", " +
+      data[i].street +
+      ", " +
+      data[i].city +
+      ", " +
+      data[i].state;
+    console.log(addressInput);
     const request = {
       query: addressInput,
       fields: ["formatted_address", "name", "geometry"],
