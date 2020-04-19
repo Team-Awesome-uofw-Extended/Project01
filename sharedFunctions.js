@@ -77,14 +77,15 @@ const getYelp = async (name, city, state, street) => {
 };
 
 const returnCrawl = async (data) => {
+  let stopsArray = JSON.parse(window.localStorage.getItem("stops"));
   try {
-    breweriesArray = [];
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 0; i < stopsArray.length; i++) {
       const res = await axios.get(
-        `https://api.openbrewerydb.org/breweriesArray/${data[i]}`
+        `https://api.openbrewerydb.org/breweries/${stopsArray[i]}`
       );
       breweriesArray.push(res.data);
     }
+    console.log(breweriesArray);
     insertData(breweriesArray);
   } catch (error) {
     console.error(error);
@@ -166,6 +167,7 @@ const insertData = (data) => {
       ul.appendChild(li);
     }
   }
+  console.log("initializing map from insert data function passing: ", data);
   initMap(data);
 };
 
