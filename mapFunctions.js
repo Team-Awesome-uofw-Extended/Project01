@@ -42,13 +42,11 @@ function initMap(data) {
           if (!place.website) {
             displayWebsite = "It doesn't look like a website exists";
           } else {
-            // displayWebsite = place.website;
             displayWebsite = `or visit them <a href="${place.website}">${place.website}</a>`;
           }
           if (!place.formatted_phone_number) {
             displayPhone = "No public phone number is listed";
           } else {
-            // displayPhone = `place.formatted_phone_number`
             displayPhone = `call them at <a href="tel://+${place.formatted_phone_number}">${place.formatted_phone_number}</a>`;
           }
           if (!place.rating) {
@@ -79,17 +77,6 @@ function initMap(data) {
   const setMap = (requestData, data) => {
     service.textSearch(requestData, callback);
   };
-
-  //   function createMarker(place, data) {
-  //     var marker = new google.maps.Marker({
-  //       map: map,
-  //       position: place.geometry.location,
-  //     });
-  //     google.maps.event.addListener(marker, "click", function () {
-  //       infowindow.setContent(data.name);
-  //       infowindow.open(map, this);
-  //     });
-  //   }
 
   for (var i = 0; i < data.length; i++) {
     let addressInput = data[i].street + ", " + data[i].city + data[i].name;

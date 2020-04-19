@@ -49,7 +49,10 @@ const getById = async (id) => {
   } catch (error) {}
 };
 
-if (window.location.pathname === "/confirmation.html") {
+if (
+  window.location.pathname === "/confirmation.html" ||
+  window.location.pathname === "/Project01/confirmation.html"
+) {
   window.onload = () => {
     let crawlCode = JSON.parse(window.localStorage.getItem("crawlCode"));
     let crawlData = JSON.parse(window.localStorage.getItem("crawlArray"));

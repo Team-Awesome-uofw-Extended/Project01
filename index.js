@@ -36,7 +36,9 @@ window.onload = () => {
 
   if (
     window.location.pathname === "/" ||
-    window.location.pathname === "/index.html"
+    window.location.pathname === "/index.html" ||
+    window.location.pathname === "/Project01/" ||
+    window.location.pathname === "/Project01/index.html"
   ) {
     console.log("runnig get location");
     const success = (location) => {
@@ -94,8 +96,10 @@ window.onload = () => {
   let newState = "";
   let newCity = "";
   if (
+    window.location.pathname === "/" ||
     window.location.pathname === "/index.html" ||
-    window.location.pathname === "/"
+    window.location.pathname === "/Project01/" ||
+    window.location.pathname === "/Project01/index.html"
   ) {
     locationButton.addEventListener("click", (e) => {
       e.preventDefault();
