@@ -38,6 +38,7 @@ function initMap(data) {
           });
           let displayPhone;
           let displayWebsite;
+          let displayRating;
           if (!place.website) {
             displayWebsite = "It doesn't look like a website exists";
           } else {
@@ -50,9 +51,15 @@ function initMap(data) {
             // displayPhone = `place.formatted_phone_number`
             displayPhone = `call them at <a href="tel://+${place.formatted_phone_number}">${place.formatted_phone_number}</a>`;
           }
+          if (!place.rating) {
+            displayRating =
+              "Google doesn't have any reviews, this brewery is likely not open to the public";
+          } else {
+            displayRating = `${place.name} has an average rating of ${place.rating}`;
+          }
 
           console.log(displayWebsite);
-          let displayInfo = `${place.name} has an average rating of ${place.rating}<br> ${displayPhone}<br>
+          let displayInfo = `${displayRating}<br> ${displayPhone}<br>
          ${displayWebsite}`;
           google.maps.event.addListener(marker, "click", function () {
             infowindow.setContent(displayInfo);
