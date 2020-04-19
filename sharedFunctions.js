@@ -78,10 +78,9 @@ const getYelp = async (name, city, state, street) => {
       }
     );
     activeYelpRequest = detailRes.data;
-    console.log("Yelp query returns", activeYelpRequest);
+
     yelpModal(activeYelpRequest);
   } catch (error) {
-    console.error(error);
     M.toast({ html: "I'm sorry, this brewery cannot be found in Yelp." });
   }
 };
@@ -95,17 +94,14 @@ const returnCrawl = async (data) => {
       );
       breweriesArray.push(res.data);
     }
-    console.log(breweriesArray);
+
     insertData(breweriesArray);
-  } catch (error) {
-    console.error(error);
-  }
+  } catch (error) {}
 };
 let displayed = [];
 let dataHolder = [];
 
 const insertData = (data) => {
-  console.log("running insert Data");
   for (var i = 0; i < data.length; i++) {
     if (displayed.indexOf(data[i].id) === -1) {
       displayed.push(data[i].id);
@@ -179,7 +175,7 @@ const insertData = (data) => {
       ul.appendChild(li);
     }
   }
-  console.log("initializing map from insert data function passing: ", data);
+
   initMap(data);
 };
 
