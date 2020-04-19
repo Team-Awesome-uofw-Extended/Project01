@@ -18,7 +18,8 @@ $("#crawl-submit").click(function () {
   crawlCode = Math.round(Math.random() * 1000000);
   passingCrawl = JSON.parse(localStorage.getItem("crawlArray"));
   localStorage.setItem("crawlCode", JSON.stringify(crawlCode));
-  window.location.pathname = "./confirmation.html";
+  window.location.href = `${hostedRoot}confirmation.html`;
+  // window.location.pathname = "./confirmation.html";
   writeCrawl();
 });
 
@@ -59,7 +60,6 @@ if (
     for (var i = 0; i < crawlData.length; i++) {
       getById(crawlData[i]);
     }
-
     $("#confirmation-code").append(crawlCode);
   };
 }
