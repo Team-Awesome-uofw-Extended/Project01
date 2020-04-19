@@ -11,8 +11,15 @@ function initMap(data) {
 
   const callback = (results, status) => {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
-      map.setCenter(results[0].geometry.location);
-      console.log("results returns...", results);
+      const defaultCenter = {
+        lat: 39.8283,
+        lng: -98.5795,
+      };
+      if (results.length >= 1) {
+        map.setCenter(results[0].geometry.location);
+      } else {
+        map.setCenter(defaultCenter);
+      }
       let request = {
         placeId: results[0].place_id,
         fields: [
@@ -28,10 +35,9 @@ function initMap(data) {
       infowindow = new google.maps.InfoWindow();
       service.getDetails(request, (place, status) => {
         //   !! Need to add a setTimeout function on crawlcode retrieval page so google doesn't throw a fit that we're making requests to rapidly
-        console.log("request returns => ", request);
 
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-          console.log("place returns ", place);
+          console.log(status);
           var marker = new google.maps.Marker({
             map: map,
             position: place.geometry.location,
@@ -78,7 +84,6 @@ function initMap(data) {
   };
 
   for (var i = 0; i < data.length; i++) {
-    // let stateAbbreviated = stateArray[data[i].state];
     let addressInput =
       data[i].name +
       ", " +
@@ -87,7 +92,7 @@ function initMap(data) {
       data[i].city +
       ", " +
       data[i].state;
-    console.log(addressInput);
+
     const request = {
       query: addressInput,
       fields: ["formatted_address", "name", "geometry"],

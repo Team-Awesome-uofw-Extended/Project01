@@ -52,9 +52,13 @@ window.onload = () => {
   }
 
   const clearCurrentList = () => {
-    do {
-      ul.removeChild(ul.lastElementChild);
-    } while (ul.children.length > 0);
+    if (ul.children.length > 0) {
+      do {
+        ul.removeChild(ul.lastElementChild);
+      } while (ul.children.length > 0);
+    } else {
+      console.log("returning here");
+    }
   };
 
   const byCity = async (city) => {
