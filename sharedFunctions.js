@@ -15,13 +15,21 @@ let pageOffset = 1;
 let breweriesArray = [];
 let ul;
 if (
+  window.location.pathname === "/" ||
   window.location.pathname === "/index.html" ||
-  window.location.pathname === "/"
+  window.location.pathname === "/Project01/" ||
+  window.location.pathname === "/Project01/index.html"
 ) {
   ul = document.getElementById("brewList");
-} else if (window.location.pathname === "/confirmation.html") {
+} else if (
+  window.location.pathname === "/confirmation.html" ||
+  window.location.pathname === "/Project01/confirmation.html"
+) {
   ul = document.getElementById("brewConfirmation");
-} else if (window.location.pathname === "/crawlcode.html") {
+} else if (
+  window.location.pathname === "/crawlcode.html" ||
+  window.location.pathname === "/Project01/crawlcode.html"
+) {
   ul = document.getElementById("CrawlCodeList");
 }
 const setCheckedState = (target) => {
@@ -73,7 +81,7 @@ const getYelp = async (name, city, state, street) => {
     console.log("Yelp query returns", activeYelpRequest);
     yelpModal(activeYelpRequest);
   } catch (error) {
-    console.error(error)
+    console.error(error);
     M.toast({ html: "I'm sorry, this brewery cannot be found in Yelp." });
   }
 };
@@ -156,7 +164,9 @@ const insertData = (data) => {
       // }
       if (
         window.location.pathname === "/" ||
-        window.location.pathname === "/index.html"
+        window.location.pathname === "/index.html" ||
+        window.location.pathname === "/Project01/" ||
+        window.location.pathname === "/Project01/index.html"
       ) {
         li.appendChild(checkBoxContainer);
       }
@@ -175,13 +185,16 @@ const insertData = (data) => {
 
 const redirectAndLoad = () => {
   if (!window.localStorage.stops) {
-    window.location.pathname = "/index.html";
+    window.location.pathname = `${hostedRoot}index.html`;
   }
   const stops = JSON.parse(window.localStorage.getItem("stops"));
   returnCrawl(stops);
 };
 
-if (window.location.pathname === "/crawlcode.html") {
+if (
+  window.location.pathname === "/crawlcode.html" ||
+  window.location.pathname === "/Project01/crawlcode.html"
+) {
   redirectAndLoad();
 }
 
@@ -193,9 +206,9 @@ const getCrawl = (crawlCode) => {
     .then((snapshot) => {
       let crawlReturn = snapshot.val().stops;
       window.localStorage.setItem("stops", JSON.stringify(crawlReturn));
-      window.location.pathname = "/crawlcode.html";
+      // window.location.pathname = "./crawlcode.html";
       // !! Uncomment this and delete the one above when hosted on github pages
-      // window.location.href = `${hostedRoot}crawlcode.html`;
+      window.location.href = `${hostedRoot}crawlcode.html`;
     })
     .catch((err) => {
       M.toast({ html: "I'm sorry, that is not a valid crawl code" });
@@ -231,7 +244,9 @@ const paginateDown = async () => {
 
 if (
   window.location.pathname === "/" ||
-  window.location.pathname === "/index.html"
+  window.location.pathname === "/index.html" ||
+  window.location.pathname === "/Project01/" ||
+  window.location.pathname === "/Project01/index.html"
 ) {
   document.getElementById("paginateUp").addEventListener("click", () => {
     displayed = [];
@@ -247,5 +262,5 @@ document.getElementById("homeLink").addEventListener("click", () => {
   window.localStorage.removeItem("stops");
   window.localStorage.removeItem("crawlArray");
   window.localStorage.removeItem("crawlCode");
-  window.location.pathname = "/index.html";
+  window.location.pathname = `${hostedRoot}index.html`;
 });
