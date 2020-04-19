@@ -193,7 +193,7 @@ const getCrawl = (crawlCode) => {
     .then((snapshot) => {
       let crawlReturn = snapshot.val().stops;
       window.localStorage.setItem("stops", JSON.stringify(crawlReturn));
-      window.location.pathname = "/crawlcode.html";
+      window.location.pathname = "./crawlcode.html";
       // !! Uncomment this and delete the one above when hosted on github pages
       // window.location.href = `${hostedRoot}crawlcode.html`;
     })
