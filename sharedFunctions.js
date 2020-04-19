@@ -73,6 +73,7 @@ const getYelp = async (name, city, state, street) => {
     console.log("Yelp query returns", activeYelpRequest);
     yelpModal(activeYelpRequest);
   } catch (error) {
+    console.error(error)
     M.toast({ html: "I'm sorry, this brewery cannot be found in Yelp." });
   }
 };

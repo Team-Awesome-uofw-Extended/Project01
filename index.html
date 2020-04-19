@@ -73,8 +73,40 @@
       <div class="modal-footer">
         <a href="#!" class="modal-close waves-effect red darken-4 btn right" id="changeLocationButton">Change
           Location</a>
+        </div>
       </div>
-    </div>
+
+      <div id="yelpmodal" class="modal yelpmodal container">
+        
+        <div class="modal-content">
+          <a href="" id="yelpURL" target="_blank"><h4 id="yelpName"></h4></a>
+          <div id="yelpRatingContainer">
+            <img id="yelpPic" id="" alt="">
+          </div>
+          <h6 id="yelpPhone"></h6>
+          <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect red darken-4 btn right" id="okay">Okay</a>
+          </div>
+        </div>
+      </div>
+
+      
+      <div id="crawl-confirmation" class="modal">
+        <div class="modal-content">
+          <h4>Congratulations!</h4>
+          <div class="row">
+    
+            <div class="col s12">
+              <div class="row">
+                <h5 id="confirmation-code">You have scheduled a crawl. Your crawl code is: </h5>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect red darken-4 btn right" id="okay">Okay</a>
+          </div>
+        </div>
+      </div>
 
     <div class=" row map col s4 center-align" id="map"></div>
 
@@ -93,22 +125,7 @@
         style="margin-bottom: 30px; margin-top: 20px;">Submit</a>
     </div>
   </div>
-
-  <div id="yelp-modal" class="modal">
-    <div class="modal-content">
-      <h4>Yelp Info</h4>
-      <div class="row">
-        <div class="col s12">
-          <div class="yelp-info">
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <a href="#!" class="modal-close waves-effect red darken-4 btn right" id="okay">Okay</a>
-      </div>
-    </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
   <script>
     M.AutoInit();
   </script>
