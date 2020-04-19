@@ -36,8 +36,24 @@ function initMap(data) {
             map: map,
             position: place.geometry.location,
           });
-          let displayInfo = `${place.name} has an average rating of ${place.rating}<br> call them at <a href="tel://+${place.formatted_phone_number}">${place.formatted_phone_number}</a><br>
-          or visit them <a href="${place.website}">Here</a>`;
+          let displayPhone;
+          let displayWebsite;
+          if (!place.website) {
+            displayWebsite = "It doesn't look like a website exists";
+          } else {
+            // displayWebsite = place.website;
+            displayWebsite = `or visit them <a href="${place.website}">${place.website}</a>`;
+          }
+          if (!place.formatted_phone_number) {
+            displayPhone = "No public phone number is listed";
+          } else {
+            // displayPhone = `place.formatted_phone_number`
+            displayPhone = `call them at <a href="tel://+${place.formatted_phone_number}">${place.formatted_phone_number}</a>`;
+          }
+
+          console.log(displayWebsite);
+          let displayInfo = `${place.name} has an average rating of ${place.rating}<br> ${displayPhone}<br>
+         ${displayWebsite}`;
           google.maps.event.addListener(marker, "click", function () {
             infowindow.setContent(displayInfo);
             infowindow.open(map, this);
