@@ -25,7 +25,9 @@ nav {
   margin-bottom: 20px;
 }
 
-.btn, .btn-large, .btn-small {
+.btn,
+.btn-large,
+.btn-small {
   font-size: 1.25rem;
 }
 
@@ -35,9 +37,15 @@ nav ul a {
 
 .yelpRatingContainer {
   display: flex;
-  
+
 }
 
-.yelpPic {
+#yelpPic {
   max-height: 50px;
+  margin-bottom: 15px;
+}
+
+#yelpIcon {
+  display: inline-block;
+  height: 50px;
 }
