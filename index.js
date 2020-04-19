@@ -1,5 +1,5 @@
 const IdontCareItsFree = "DVuBz9NPzOaxkWYpA8tGNG4ZhrKokozQ";
-const getCityDir = "http://open.mapquestapi.com/geocoding/v1/reverse";
+const getCityDir = "https://open.mapquestapi.com/geocoding/v1/reverse";
 
 const listItem = document.getElementsByClassName("collection-item");
 const locationButton = document.getElementById("changeLocationButton");
