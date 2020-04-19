@@ -117,5 +117,6 @@ window.onload = () => {
 $(window).on("load", function () {
   if (window.location.href.indexOf("confirmation") > -1) {
     $("#crawl-confirmation").modal("open");
+    console.log("Hello")
   }
 });

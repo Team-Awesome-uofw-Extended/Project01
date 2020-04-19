@@ -32,3 +32,12 @@ nav {
 nav ul a {
   font-size: 1.25rem;
 }
+
+.yelpRatingContainer {
+  display: flex;
+  
+}
+
+.yelpPic {
+  max-height: 50px;
+}
