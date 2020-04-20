@@ -80,7 +80,6 @@ const getYelp = async (name, city, state, street) => {
       }
     );
     activeYelpRequest = detailRes.data;
-
     yelpModal(activeYelpRequest);
   } catch (error) {
     M.toast({ html: "I'm sorry, this brewery cannot be found in Yelp." });
@@ -96,7 +95,6 @@ const returnCrawl = async (data) => {
       );
       breweriesArray.push(res.data);
     }
-
     insertData(breweriesArray);
   } catch (error) {}
 };
@@ -204,9 +202,9 @@ const getCrawl = (crawlCode) => {
     .then((snapshot) => {
       let crawlReturn = snapshot.val().stops;
       window.localStorage.setItem("stops", JSON.stringify(crawlReturn));
-      window.location.pathname = "./crawlcode.html";
-      // !! Uncomment this and delete the one above when hosted on github pages
-      // window.location.href = `${hostedRoot}crawlcode.html`;
+      // window.location.pathname = "./crawlcode.html";
+      // !! GITHUB_PAGES Uncomment this and delete the one above when hosted on github pages
+      window.location.href = `${hostedRoot}crawlcode.html`;
     })
     .catch((err) => {
       M.toast({ html: "I'm sorry, that is not a valid crawl code" });
