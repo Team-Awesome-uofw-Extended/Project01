@@ -50,14 +50,16 @@ const setCheckedState = (target) => {
 
 const getYelp = async (name, city, state, street) => {
   state = state.toLowerCase();
-  let stateAbbreviated = stateArray[state];
+  let filtered = stateArray.filter((st) => st.name == state);
+  filtered = filtered[0].abbreviated;
+  console.log(filtered);
   try {
     const res = await axios.get(`${corsAnywhere}${yelpRoot}/matches`, {
       params: {
         name: name,
         address1: street,
         city: city,
-        state: stateAbbreviated,
+        state: filtered,
         country: "US",
       },
       headers: {
